@@ -5,10 +5,12 @@ const API = "http://localhost:4000/";
 
 let initialState = {
   loading: false,
-  allreceipe:{},
-  successallreceipe:false,
-  createreceipe:false,
-  currentreceipe:{}
+  allreceipe: {},
+  successallreceipe: false,
+  createreceipe: false,
+  currentreceipe: {},
+  findReceipedata:{},
+  findReceipeSuccess:false,
 };
 
 export const recipedata = createAsyncThunk(
@@ -22,8 +24,6 @@ export const recipedata = createAsyncThunk(
     overviewInputs,
   }) => {
     try {
-
-    
       const token = localStorage.getItem("token");
       const body = JSON.stringify({
         recipeName,
@@ -31,7 +31,7 @@ export const recipedata = createAsyncThunk(
         updatedPostData,
         ingredientInputs,
         stepInputs,
-        overviewInputs
+        overviewInputs,
       });
 
       const result = await fetch(`${API}receipe/create`, {
@@ -68,6 +68,24 @@ export const getrecipedata = createAsyncThunk("getrecipedata", async () => {
   }
 });
 
+export const findReceipe = createAsyncThunk("findReceipe", async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const result = await fetch(`${API}receipe/find/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+});
+
 const reciepeSlice = createSlice({
   name: "reciepe",
   initialState,
@@ -87,8 +105,7 @@ const reciepeSlice = createSlice({
         } else {
           // state.errorsignup = action.payload.message;
           state.createreceipe = action.payload.success;
-          state.currentreceipe=action.payload.data;
-
+          state.currentreceipe = action.payload.data;
         }
       })
       .addCase(recipedata.rejected, (state) => {
@@ -108,14 +125,35 @@ const reciepeSlice = createSlice({
         } else {
           // state.errorsignup = action.payload.message;
           state.successallreceipe = action.payload.success;
-          state.allreceipe=action.payload.data;
-
+          state.allreceipe = action.payload.data;
         }
       })
       .addCase(getrecipedata.rejected, (state) => {
         state.loading = false;
         state.successallreceipe = false;
       })
+      .addCase(findReceipe.pending, (state) => {
+        state.loading = true;
+        state.findReceipeSuccess = false;
+      })
+      .addCase(findReceipe.fulfilled, (state, action) => {
+        state.loading = false;
+
+        if (action.payload.error) {
+          // state.errorsignup = action.payload.error;
+          state.findReceipeSuccess = action.payload.success;
+        } else {
+          // state.errorsignup = action.payload.message;
+          state.findReceipeSuccess = action.payload.success;
+          state.findReceipedata = action.payload.data;
+        }
+      })
+      .addCase(findReceipe.rejected, (state) => {
+        state.loading = false;
+        state.findReceipeSuccess = false;
+      })
+
+      
   },
 });
 

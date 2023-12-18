@@ -8,5 +8,6 @@ const authMiddleware = require("../controllers/authMiddleware.js");
 
 app.post("/create",authMiddleware, createReceipe.createReceipe);
 app.get("/allreceipe",authMiddleware,createReceipe.getAllRecipes);
+app.get("/find/:id",authMiddleware,createReceipe.findReceipe);
 
 module.exports = app;

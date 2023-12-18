@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { getrecipedata, recipedata } from "../../Reducers/Reciepe";
+import { getrecipedata, recipedata, findReceipe } from "../../Reducers/Reciepe";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 const RecipeDetail = () => {
   const dispatch = useDispatch();
-  const { recipeId } = useParams();
+  const { id } = useParams();
   const [showAllIngredients, setShowAllIngredients] = useState(false);
   const [editMode, setEditMode] = useState(true);
 
@@ -21,10 +21,12 @@ const RecipeDetail = () => {
 
   const [imageprev, setImagePrev] = useState(null);
 
-  ///////////////////////
-  const handleSave = () => {
-    setEditMode(false);
-  };
+  useEffect(() => {
+
+    if (id !== 0||id!==undefined) {
+      dispatch(findReceipe(id));
+    }
+  }, [id]);
 
   // to delete all data
   const handleDelete = () => {};
@@ -33,7 +35,6 @@ const RecipeDetail = () => {
     setEditMode(true);
   };
 
-  //////////////////////
   const handleShowAllIngredients = () => {
     setShowAllIngredients(!showAllIngredients);
   };
@@ -45,10 +46,19 @@ const RecipeDetail = () => {
     });
   };
 
-  const { successallreceipe, createreceipe, currentreceipe } = useSelector(
+  const { successallreceipe, createreceipe, currentreceipe,findReceipedata,findReceipeSuccess } = useSelector(
     (state) => state.reciepe
   );
 
+   useEffect(()=>{
+    if(findReceipeSuccess)
+    {   
+        setData(findReceipedata);
+        setImagePrev(findReceipedata?.recipePhoto?.secure_url);
+        setEditMode(false);
+    }
+   },[findReceipedata,findReceipeSuccess])
+   
   useEffect(() => {
     if (createreceipe) {
       console.log(currentreceipe);
@@ -169,7 +179,10 @@ const RecipeDetail = () => {
     <>
       {editMode && (
         <div>
-          <button className="w-40 bg-cyan-600 rounded-md p-1" onClick={addFun}>
+          <button
+            className="w-40 bg-cyan-600 rounded-md p-1"
+            onClick={() => addFun()}
+          >
             <p className="text-white text-xs font-medium font-['Roboto']">
               Add {name}
             </p>
@@ -225,20 +238,13 @@ const RecipeDetail = () => {
                   {
                     <div className="w-full flex gap-2 justify-end">
                       <button
-                        className="w-16 bg-red-400 rounded-md p-1 flex items-center justify-center"
+                        className="w-24 bg-red-400 hover:bg-red-600 rounded-md p-2 flex items-center justify-center"
                         onClick={handleDelete}
                       >
                         <AiOutlineDelete className="text-white" />
                       </button>
 
-                      {editMode ? (
-                        <button
-                          className="w-16 bg-green-500 rounded-md p-1 flex items-center justify-center"
-                          onClick={handleSave}
-                        >
-                          <AiOutlineSave className="text-white" />
-                        </button>
-                      ) : (
+                      {!editMode && (
                         <button
                           className="w-16 bg-cyan-500 rounded-md p-1 flex items-center justify-center"
                           onClick={handleEdit}
@@ -251,7 +257,7 @@ const RecipeDetail = () => {
 
                   {editMode ? (
                     <input
-                      className="h-10 w-full text-neutral-700 text-2xl font-extrabold outline-none bg-gray-400 mt-4"
+                      className="h-10 w-full text-neutral-800 text-xl font-serif outline-none bg-gray-200 mt-4"
                       type="text"
                       name="recipeName"
                       placeholder="Enter recipe name..."
@@ -259,21 +265,21 @@ const RecipeDetail = () => {
                       onChange={handleChange}
                     />
                   ) : (
-                    <div className="h-10 w-full text-gray-200 text-2xl font-extrabold">
+                    <div className="h-10 w-full text-gray-200 text-2xl font-serif">
                       {data?.recipeName}
                     </div>
                   )}
 
                   {editMode ? (
                     <textarea
-                      className="w-full p-2 md:w-4/5 mt-2 text-neutral-200 text-justify text-sm font-normal font-['Roboto'] outline-none leading-none bg-gray-400"
+                      className="w-full p-2  mt-2 text-neutral-800 text-justify text-sm font-serif  outline-none leading-none bg-gray-200"
                       name="recipeDescription"
                       value={data.recipeDescription || ""}
-                      placeholder="Enter recipeDescription..."
+                      placeholder="Enter recipe Description"
                       onChange={handleChange}
                     />
                   ) : (
-                    <div className="md:w-4/5 text-neutral-500 text-justify text-sm font-normal font-['Roboto'] leading-none">
+                    <div className="md:w-4/5 text-gray-200 text-justify text-sm font-normal font-['Roboto'] leading-none">
                       {data?.recipeDescription}
                     </div>
                   )}
@@ -301,18 +307,18 @@ const RecipeDetail = () => {
                             className="absolute -left-2 -top-2 rounded text-white bg-red-400"
                             onClick={() => handleDeleteOverview(index)}
                           >
-                            <AiOutlineDelete />
+                            <AiOutlineDelete style={{ cursor: "pointer" }} />
                           </div>
                         )}
 
-                        <div className="w-12 h-10 bg-white rounded-lg shadow">
-                          <div className="w-12 h-10 bg-blue-50 rounded-lg" />
+                        <div className="w-full h-10 bg-white rounded-lg shadow">
+                          <div className="w-full h-10 bg-blue-50 rounded-lg" />
                         </div>
                         <div>
                           {editMode ? (
                             <>
                               <input
-                                className="text-xs w-full font-medium text-neutral-700"
+                                className="text-xs w-full font-medium text-neutral-700 outline-none"
                                 disabled={!editMode}
                                 name="name"
                                 placeholder="name..."
@@ -320,10 +326,10 @@ const RecipeDetail = () => {
                                 onChange={(e) => handleOverviewChange(e, index)}
                               />
                               <textarea
-                                className="text-xs w-full font-medium text-neutral-400"
+                                className="text-xs w-full font-medium text-neutral-700 outline-none"
                                 disabled={!editMode}
                                 name="description"
-                                placeholder="description..."
+                                placeholder="Description..."
                                 value={item.description || ""}
                                 onChange={(e) => handleOverviewChange(e, index)}
                               />
@@ -365,7 +371,7 @@ const RecipeDetail = () => {
                             className="absolute -left-2 -top-2 rounded text-white bg-red-400"
                             onClick={() => handleDeleteIngredient(index)}
                           >
-                            <AiOutlineDelete />
+                            <AiOutlineDelete style={{ cursor: "pointer" }} />
                           </div>
                         )}
 
@@ -376,7 +382,7 @@ const RecipeDetail = () => {
                           {editMode ? (
                             <>
                               <input
-                                className="text-xs w-full font-medium text-neutral-700"
+                                className="text-xs w-full font-medium outline-none text-neutral-700"
                                 disabled={!editMode}
                                 name="name"
                                 placeholder="name..."
@@ -386,7 +392,7 @@ const RecipeDetail = () => {
                                 }
                               />
                               <textarea
-                                className="text-xs w-full font-medium text-neutral-400"
+                                className="text-xs w-full font-medium outline-none text-neutral-700"
                                 disabled={!editMode}
                                 name="description"
                                 placeholder="description..."
@@ -411,7 +417,11 @@ const RecipeDetail = () => {
                     ))}
                   </div>
                   {/* add ingredient */}
-                  <AddButton name={"ingredient"} addFun={handleAddIngredient} />
+                  <AddButton
+                    name={"ingredient"}
+                    addFun={handleAddIngredient}
+                    style={{ cursor: "pointer" }}
+                  />
 
                   {/* show all button */}
                   {!editMode && (
@@ -426,7 +436,7 @@ const RecipeDetail = () => {
                   )}
 
                   {/* Steps */}
-                  <div className="">
+                  <div className="flex flex-col gap-3">
                     <div className="flex flex-col gap-4">
                       <div className="w-40 h-5 text-neutral-400 text-xl font-extrabold ">
                         Steps
@@ -441,11 +451,13 @@ const RecipeDetail = () => {
                               {editMode ? (
                                 <div className="flex gap-1 items-center">
                                   <span onClick={() => handleDeleteStep(index)}>
-                                    <AiOutlineDelete />
+                                    <AiOutlineDelete
+                                      style={{ cursor: "pointer" }}
+                                    />
                                   </span>
                                   <span>{index + 1}. </span>
                                   <input
-                                    className="w-full"
+                                    className="w-full outline-none text-neutral-700"
                                     value={step || ""}
                                     onChange={(e) => handleStepChange(e, index)}
                                   />

@@ -81,8 +81,13 @@ const Header = () => {
     setIngredientInputs(newIngredients);
   };
 
+
+  const openFood=(id)=>{
+    navigate(`/add/${id}`);
+  }
   const AddFood = () => {
-    setAddFoodInput(true);
+    // setAddFoodInput(true);
+    navigate(`/add/0`);
   };
 
   const handleCloseAddFood = () => {
@@ -151,8 +156,9 @@ const Header = () => {
         {searchQuery ? (
             // If searchQuery is not empty, use filtered recipes
             filteredRecipes.map((recipe) => (
+              <div  key={recipe._id} onClick={()=>openFood(recipe._id)}>
               <FoodCard
-                key={recipe._id}
+                id={recipe._id}
                 dull={addFoodInput}
                 createdBy={recipe.createdBy.firstName}
                 ingredients={recipe.ingredients}
@@ -160,13 +166,16 @@ const Header = () => {
                 recipeName={recipe.recipeName}
                 recipePhoto={recipe.recipePhoto}
                 steps={recipe.steps}
+                
               />
+              </div>
             ))
           ) : (
             // If searchQuery is empty, use all recipes
             reciepeData.map((recipe) => (
+              <div  key={recipe._id} onClick={()=>openFood(recipe._id)}>
               <FoodCard
-                key={recipe._id}
+              id={recipe._id}
                 dull={addFoodInput}
                 createdBy={recipe.createdBy.firstName}
                 ingredients={recipe.ingredients}
@@ -174,7 +183,9 @@ const Header = () => {
                 recipeName={recipe.recipeName}
                 recipePhoto={recipe.recipePhoto}
                 steps={recipe.steps}
+                
               />
+              </div>
             ))
           )}
 
