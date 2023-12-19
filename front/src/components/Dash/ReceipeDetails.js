@@ -49,7 +49,7 @@ const RecipeDetail = ({ edit }) => {
     }
   }, [id]);
 
-  // to delete all data
+
   const handleDelete = () => {
     dispatch(deleteReceipe(id));
   };
@@ -62,7 +62,6 @@ const RecipeDetail = ({ edit }) => {
 
   const handleEdit = () => {
     setEditMode(true);
-    
   };
 
   useEffect(() => {
@@ -85,8 +84,6 @@ const RecipeDetail = ({ edit }) => {
       [e.target.name]: e.target.value,
     });
   };
-
-
 
   useEffect(() => {
     if (successallreceipe) setAllReceipeData(allreceipe);
@@ -119,10 +116,11 @@ const RecipeDetail = ({ edit }) => {
     }
   }, [currentreceipe, createreceipe]);
 
-  ///////////////// Overview /////////////////
 
   const handleAddOverview = () => {
     const newData = { ...data };
+
+    newData.overview = [...newData.overview];
 
     newData.overview.push({ name: "", description: "" });
 
@@ -186,10 +184,9 @@ const RecipeDetail = ({ edit }) => {
   };
 
   const handleAddIngredient = () => {
-    const newData = { ...data };
+    const newData = JSON.parse(JSON.stringify(data));
 
-    // Add an empty ingredient to the ingredients array
-    newData?.ingredients?.push({ name: "", description: "" });
+    newData.ingredients.push({ name: "", description: "" });
 
     setData(newData);
   };
@@ -204,6 +201,8 @@ const RecipeDetail = ({ edit }) => {
 
   const handleAddStep = () => {
     const newData = { ...data };
+
+    newData.steps = [...newData.steps];
 
     newData.steps.push("");
 
@@ -300,7 +299,7 @@ const RecipeDetail = ({ edit }) => {
                       {!editMode && (
                         <button
                           className="w-16 bg-cyan-500 rounded-md p-1 flex items-center justify-center"
-                          onClick={()=>handleEdit()}
+                          onClick={() => handleEdit()}
                         >
                           <AiOutlineEdit className="text-white" />
                         </button>
@@ -364,8 +363,8 @@ const RecipeDetail = ({ edit }) => {
                           </div>
                         )}
 
-                        <div className="w-full h-10 bg-white rounded-lg shadow">
-                          <div className="w-full h-10 bg-blue-50 rounded-lg" />
+                        <div className="w-12 h-10 bg-white rounded-lg shadow">
+                          <div className="w-12 h-10 bg-blue-50 rounded-lg" />
                         </div>
                         <div>
                           {editMode ? (
