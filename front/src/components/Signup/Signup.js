@@ -26,8 +26,8 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const [passwordVisible, setPasswordVisible] = useState(true);
-  const [passwordVisible2, setPasswordVisible2] = useState(true);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible2, setPasswordVisible2] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -40,7 +40,7 @@ const Signup = () => {
   const { successsignup, successsignin } = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log(successsignin, successsignup);
+
     if (successsignin || successsignup) {
       navigate("/dash");
     }

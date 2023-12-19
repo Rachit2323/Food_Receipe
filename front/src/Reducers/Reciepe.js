@@ -116,13 +116,7 @@ export const editdata = createAsyncThunk("editdata", async ({
   overviewInputs,
 }) => {
   try {
-    console.log( id,
-      recipeName,
-      recipeDescription,
-      updatedPostData,
-      ingredientInputs,
-      stepInputs,
-      overviewInputs);
+  
     const token = localStorage.getItem("token");
     const body = JSON.stringify({
       id,
@@ -171,7 +165,7 @@ const reciepeSlice = createSlice({
         }
       })
       .addCase(recipedata.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.createreceipe = false;
       })
       .addCase(getrecipedata.pending, (state) => {
@@ -191,7 +185,7 @@ const reciepeSlice = createSlice({
         }
       })
       .addCase(getrecipedata.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.successallreceipe = false;
       })
       .addCase(findReceipe.pending, (state) => {
@@ -211,7 +205,7 @@ const reciepeSlice = createSlice({
         }
       })
       .addCase(findReceipe.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.findReceipeSuccess = false;
       })
       .addCase(deleteReceipe.pending, (state) => {
@@ -231,7 +225,7 @@ const reciepeSlice = createSlice({
         }
       })
       .addCase(deleteReceipe.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.deleteSuccess = false;
       })
       .addCase(editdata.pending, (state) => {
@@ -251,7 +245,7 @@ const reciepeSlice = createSlice({
         }
       })
       .addCase(editdata.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.createreceipe = false;
       })
       

@@ -15,7 +15,7 @@ const FoodCard = ({
   const navigate = useNavigate();
 
   const handleButtonClick = (id) => {
-    console.log(id);
+
     navigate(`/edit/${id}`);
   };
 
@@ -23,13 +23,14 @@ const FoodCard = ({
     navigate(`/add/${id}`);
   };
 
+  
   return (
     <div
-      className={`bg-white p-4 rounded-md shadow-md transition-transform transform-gpu hover:scale-105 cursor-pointer ${
+      className={`bg-white w-full h-full  p-4 rounded-md shadow-md transition-transform transform-gpu hover:scale-105 cursor-pointer ${
         dull && "opacity-50"
       }`}
     >
-      <div className="mb-4">
+      <div className="mb-4 flex justify-around flex-col h-full">
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-semibold  flex text-gray-700 m-0">
             Name: {recipeName}

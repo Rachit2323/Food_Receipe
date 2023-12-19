@@ -93,13 +93,14 @@ const authSlice = createSlice({
           state.errorsignup = action.payload.error;
           state.successsignup = action.payload.success;
         } else {
+
           state.errorsignup = action.payload.message;
           state.successsignup = action.payload.success;
           state.signupdata = action.payload.data;
         }
       })
       .addCase(signupUser.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.successsignup = false;
       })
       .addCase(signinUser.pending, (state) => {
@@ -118,7 +119,7 @@ const authSlice = createSlice({
         }
       })
       .addCase(signinUser.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.successsignin = false;
       })
       .addCase(userDetail.pending, (state) => {
@@ -138,7 +139,7 @@ const authSlice = createSlice({
         }
       })
       .addCase(userDetail.rejected, (state) => {
-        state.loading = false;
+        state.loading = true;
         state.userdetailsucs=false;
       });
   },

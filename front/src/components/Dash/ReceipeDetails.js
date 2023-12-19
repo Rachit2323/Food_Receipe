@@ -20,6 +20,7 @@ const RecipeDetail = ({ edit }) => {
   const [allreceipedata, setAllReceipeData] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [updatedPostData, setUpdatedPostData] = useState(null);
+  
 
   const [data, setData] = useState({
     recipeName: "",
@@ -36,6 +37,7 @@ const RecipeDetail = ({ edit }) => {
     findReceipeSuccess,
     deleteSuccess,
     allreceipe,
+    loading,
   } = useSelector((state) => state.reciepe);
 
   const { userdetailsucs, userpost, userdet } = useSelector(
@@ -53,11 +55,11 @@ const RecipeDetail = ({ edit }) => {
     }
   }, [id]);
 
-  useEffect(() => {
-    if (editMode && id === "0") {
+  // useEffect(() => {
+  //   if (editMode && id === "0") {
 
-    }
-  }, [editMode]);
+  //   }
+  // }, [editMode]);
 
   const handleDelete = () => {
     dispatch(deleteReceipe(id));
@@ -97,11 +99,11 @@ const RecipeDetail = ({ edit }) => {
   };
 
   useEffect(() => {
-    if (successallreceipe) setAllReceipeData(allreceipe);
+    if (successallreceipe&&(id!=="0")) setAllReceipeData(allreceipe);
   }, [successallreceipe, userdetailsucs, userdet]);
 
   useEffect(() => {
-    if (Array.isArray(allreceipedata)) {
+    if (Array.isArray(allreceipedata)&&(id!=="0")) {
       const matchingRecipe = allreceipedata.find((recipe) => recipe._id === id);
       setCurrentUser(matchingRecipe);
     }
@@ -113,6 +115,7 @@ const RecipeDetail = ({ edit }) => {
       setImagePrev(findReceipedata?.recipePhoto?.secure_url);
       setEditMode(false);
     }
+  
   }, [findReceipedata, findReceipeSuccess]);
 
   useEffect(() => {
@@ -122,7 +125,7 @@ const RecipeDetail = ({ edit }) => {
   }, []);
 
   useEffect(() => {
-    if (createreceipe) {
+    if (createreceipe&&(id!=="0")) {
       setData(currentreceipe);
       setImagePrev(currentreceipe?.recipePhoto?.secure_url);
       setEditMode(false);
@@ -226,7 +229,7 @@ const RecipeDetail = ({ edit }) => {
   };
 
   const handleDeleteStep = (index) => {
-    console.log("dele");
+
     const newData = { ...data };
     newData.steps.splice(index, 1);
     setData(newData);
@@ -288,6 +291,10 @@ const RecipeDetail = ({ edit }) => {
       })
     );
   };
+
+  if (loading) {
+    return <div className="text-white text-3xl">Loading...</div>;
+  }
 
   return (
     <div className="">
@@ -411,7 +418,7 @@ const RecipeDetail = ({ edit }) => {
                                 className="text-xs w-full font-medium text-neutral-700 outline-none"
                                 disabled={!editMode}
                                 name="name"
-                                placeholder="Time"
+                                placeholder="eg: Time"
                                 value={item?.name || ""}
                                 onChange={(e) => handleOverviewChange(e, index)}
                               />
@@ -419,7 +426,7 @@ const RecipeDetail = ({ edit }) => {
                                 className="text-xs w-full font-medium text-neutral-700 outline-none"
                                 disabled={!editMode}
                                 name="description"
-                                placeholder="1 min"
+                                placeholder="eg: 1 min"
                                 value={item.description || ""}
                                 onChange={(e) => handleOverviewChange(e, index)}
                               />
