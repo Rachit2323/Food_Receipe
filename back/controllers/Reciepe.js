@@ -72,7 +72,6 @@ exports.findReceipe = async (req, res) => {
   try {
     const id = req.params.id;
 
-
     const recipe = await Recipe.findById(id).populate('createdBy', 'firstName');
 
     if (!recipe) {

@@ -10,6 +10,9 @@ let initialState = {
   successsignin: false,
   successsignup: false,
   signupdata: "",
+  userpost: {},
+  userdet: {},
+  userdetailsucs:false,
 };
 
 export const signupUser = createAsyncThunk("signupuser", async (body) => {
@@ -54,8 +57,27 @@ export const signinUser = createAsyncThunk("signinuser", async (body) => {
   }
 });
 
+export const userDetail = createAsyncThunk("userDetail", async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const result = await fetch(`${API}users/details`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await result.json();
+
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+});
+
 const authSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -98,6 +120,26 @@ const authSlice = createSlice({
       .addCase(signinUser.rejected, (state) => {
         state.loading = false;
         state.successsignin = false;
+      })
+      .addCase(userDetail.pending, (state) => {
+        state.loading = true;
+        state.userdetailsucs=false;
+      })
+      .addCase(userDetail.fulfilled, (state, action) => {
+        state.loading = false;
+
+        if (action.payload.error) {
+
+        } else {
+          state.userpost = action.payload.data.allPosts;
+          state.userdet = action.payload.data.user;
+          state.userdetailsucs=action.payload.success;
+        
+        }
+      })
+      .addCase(userDetail.rejected, (state) => {
+        state.loading = false;
+        state.userdetailsucs=false;
       });
   },
 });

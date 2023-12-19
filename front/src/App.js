@@ -13,7 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Signup />} />
           <Route path="/dash" element={<Dash />} />
-          <Route path="/add/:id" element={<RecipeDetail />} />
+          <Route path="/add/:id" element={<RecipeDetail edit={false}/>} />
+          <Route path="/edit/:id" element={<RecipeDetail edit={true}/>} />
           
         </Routes>
       </div>

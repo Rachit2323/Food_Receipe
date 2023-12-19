@@ -9,8 +9,8 @@ let initialState = {
   successallreceipe: false,
   createreceipe: false,
   currentreceipe: {},
-  findReceipedata:{},
-  findReceipeSuccess:false,
+  findReceipedata: {},
+  findReceipeSuccess: false,
 };
 
 export const recipedata = createAsyncThunk(
@@ -151,9 +151,7 @@ const reciepeSlice = createSlice({
       .addCase(findReceipe.rejected, (state) => {
         state.loading = false;
         state.findReceipeSuccess = false;
-      })
-
-      
+      });
   },
 });
 

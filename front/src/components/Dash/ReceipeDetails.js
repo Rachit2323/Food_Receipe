@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import { getrecipedata, recipedata, findReceipe } from "../../Reducers/Reciepe";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { userDetail } from "../../Reducers/auth.js";
 
-const RecipeDetail = () => {
+const RecipeDetail = ({ edit }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [showAllIngredients, setShowAllIngredients] = useState(false);
   const [editMode, setEditMode] = useState(true);
+  const [allreceipedata, setAllReceipeData] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
 
   const [data, setData] = useState({
     recipeName: "",
@@ -22,8 +25,7 @@ const RecipeDetail = () => {
   const [imageprev, setImagePrev] = useState(null);
 
   useEffect(() => {
-
-    if (id !== 0||id!==undefined) {
+    if (id !== "0" && id !== undefined) {
       dispatch(findReceipe(id));
     }
   }, [id]);
@@ -34,6 +36,16 @@ const RecipeDetail = () => {
   const handleEdit = () => {
     setEditMode(true);
   };
+
+  useEffect(() => {
+    if (edit) {
+      setEditMode(true);
+    }
+  }, [edit, editMode]);
+
+  useEffect(() => {
+    dispatch(userDetail());
+  }, []);
 
   const handleShowAllIngredients = () => {
     setShowAllIngredients(!showAllIngredients);
@@ -46,22 +58,45 @@ const RecipeDetail = () => {
     });
   };
 
-  const { successallreceipe, createreceipe, currentreceipe,findReceipedata,findReceipeSuccess } = useSelector(
-    (state) => state.reciepe
+  const {
+    successallreceipe,
+    createreceipe,
+    currentreceipe,
+    findReceipedata,
+    findReceipeSuccess,
+
+    allreceipe,
+  } = useSelector((state) => state.reciepe);
+
+  const { userdetailsucs, userpost, userdet } = useSelector(
+    (state) => state.user
   );
 
-   useEffect(()=>{
-    if(findReceipeSuccess)
-    {   
-        setData(findReceipedata);
-        setImagePrev(findReceipedata?.recipePhoto?.secure_url);
-        setEditMode(false);
+  useEffect(() => {
+    if (successallreceipe) setAllReceipeData(allreceipe);
+  }, [successallreceipe, userdetailsucs, userdet]);
+
+  useEffect(() => {
+    if (Array.isArray(allreceipedata)) {
+      const matchingRecipe = allreceipedata.find((recipe) => recipe._id === id);
+      setCurrentUser(matchingRecipe);
     }
-   },[findReceipedata,findReceipeSuccess])
-   
+  }, [allreceipedata, id]);
+
+  useEffect(() => {
+    if (findReceipeSuccess) {
+      setData(findReceipedata);
+      setImagePrev(findReceipedata?.recipePhoto?.secure_url);
+      setEditMode(false);
+    }
+  }, [findReceipedata, findReceipeSuccess]);
+
+  useEffect(() => {
+    dispatch(getrecipedata());
+  }, []);
+
   useEffect(() => {
     if (createreceipe) {
-      console.log(currentreceipe);
       setData(currentreceipe);
       setImagePrev(currentreceipe?.recipePhoto?.secure_url);
       setEditMode(false);
@@ -225,20 +260,22 @@ const RecipeDetail = () => {
         <div className="w-full h-full left-0 top-0 absolute  rounded-2xl" />
         <div className="w-full h-96 left-[4.32px] top-[6.71px] absolute  rounded-2xl" />
       </div>
-      <div className=" left-[29.13px] top-[16.19px] absolute text-gray-400 text-4xl font-serif p-5">
-        Receipe By :Rachit Sharma
-      </div>
+      {id !== "0" && (
+        <div className=" left-[29.13px] top-[16.19px] absolute text-gray-200 text-5xl font-serif p-1">
+          Receipe By : {currentUser?.createdBy?.firstName}
+        </div>
+      )}
 
-      <div className="w-full absolute top-16 md:top-32">
+      <div className="w-full absolute top-16 ">
         <div className="h-96 p-2 mx-0 lg:ml-16  flex flex-col gap-2 md:flex-row ">
           <div className="w-full lg:w-2/3">
-            <div className="w-full  md:p-4  rounded-2xl ">
+            <div className="w-full  md:p-4  rounded-2xl  mt-3">
               <div className=" rounded-2xl p-4">
                 <div className="w-full">
-                  {
+                  {userdet._id === currentUser?.createdBy?._id && (
                     <div className="w-full flex gap-2 justify-end">
                       <button
-                        className="w-24 bg-red-400 hover:bg-red-600 rounded-md p-2 flex items-center justify-center"
+                        className="w-16 bg-red-400 hover:bg-red-600 rounded-md p-2 flex items-center justify-center"
                         onClick={handleDelete}
                       >
                         <AiOutlineDelete className="text-white" />
@@ -253,7 +290,7 @@ const RecipeDetail = () => {
                         </button>
                       )}
                     </div>
-                  }
+                  )}
 
                   {editMode ? (
                     <input

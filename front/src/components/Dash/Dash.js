@@ -55,9 +55,6 @@ const Header = () => {
     dispatch(getrecipedata());
   }, []);
 
-  // useEffect(()=>{
-  //     console.log(reciepeData);
-  // },[reciepeData])
 
   const handleRemoveStep = (index) => {
     const newSteps = [...stepInputs];
@@ -83,7 +80,7 @@ const Header = () => {
 
 
   const openFood=(id)=>{
-    navigate(`/add/${id}`);
+    // navigate(`/add/${id}`);
   }
   const AddFood = () => {
     // setAddFoodInput(true);

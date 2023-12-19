@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const JWT_SECRET = "djbjdbjdsb233";
+const Receipe=require("../models/Reciepe.js");
 
 exports.signup = async (req, res) => {
   try {
@@ -89,6 +90,26 @@ exports.signin = async (req, res) => {
     res.status(500).json({
       success: false,
       error: "An error occurred while signing in the user",
+    });
+  }
+};
+
+exports.userDetails = async (req, res) => {
+  try {
+    const allPosts = await Receipe.find({ createdBy: req.userId }); 
+    const user = await User.findById(req.userId); 
+    res.status(200).json({
+      success: true,
+      data: {
+        allPosts,
+        user,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: "An error occurred while fetching user details",
     });
   }
 };
