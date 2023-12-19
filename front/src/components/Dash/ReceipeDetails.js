@@ -108,7 +108,7 @@ const RecipeDetail = ({ edit }) => {
   }, [allreceipedata, id]);
 
   useEffect(() => {
-    if (findReceipeSuccess) {
+    if (findReceipeSuccess&&(id!=="0")) {
       setData(findReceipedata);
       setImagePrev(findReceipedata?.recipePhoto?.secure_url);
       setEditMode(false);
