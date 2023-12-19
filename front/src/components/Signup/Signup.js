@@ -48,7 +48,6 @@ const Signup = () => {
 
   const handleLogin = () => {
     setSigninDetail(!signindetail);
-    // navigate("/sign");
   };
 
   const handleSubmit = (e) => {

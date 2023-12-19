@@ -28,7 +28,6 @@ export const recipedata = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       const body = JSON.stringify({
-    
         recipeName,
         recipeDescription,
         updatedPostData,
@@ -99,6 +98,50 @@ export const deleteReceipe = createAsyncThunk("deleteReceipe", async (id) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+    });
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+});
+
+export const editdata = createAsyncThunk("editdata", async ({
+   id,
+  recipeName,
+  recipeDescription,
+  updatedPostData,
+  ingredientInputs,
+  stepInputs,
+  overviewInputs,
+}) => {
+  try {
+    console.log( id,
+      recipeName,
+      recipeDescription,
+      updatedPostData,
+      ingredientInputs,
+      stepInputs,
+      overviewInputs);
+    const token = localStorage.getItem("token");
+    const body = JSON.stringify({
+      id,
+      recipeName,
+      recipeDescription,
+      updatedPostData,
+      ingredientInputs,
+      stepInputs,
+      overviewInputs,
+    });
+
+
+    const result = await fetch(`${API}receipe/edit`, {
+      method: "Post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: body,
     });
     const data = await result.json();
     return data;
@@ -193,6 +236,27 @@ const reciepeSlice = createSlice({
         state.loading = false;
         state.deleteSuccess = false;
       })
+      .addCase(editdata.pending, (state) => {
+        state.loading = true;
+        state.createreceipe = false;
+      })
+      .addCase(editdata.fulfilled, (state, action) => {
+        state.loading = false;
+
+        if (action.payload.error) {
+          // state.errorsignup = action.payload.error;
+          state.createreceipe = action.payload.success;
+        } else {
+          // state.errorsignup = action.payload.message;
+          state.createreceipe = action.payload.success;
+          state.currentreceipe = action.payload.data;
+        }
+      })
+      .addCase(editdata.rejected, (state) => {
+        state.loading = false;
+        state.createreceipe = false;
+      })
+      
   },
 });
 
