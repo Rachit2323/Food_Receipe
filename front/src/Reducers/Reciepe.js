@@ -11,6 +11,7 @@ let initialState = {
   currentreceipe: {},
   findReceipedata: {},
   findReceipeSuccess: false,
+  deleteSuccess:false,
 };
 
 export const recipedata = createAsyncThunk(
@@ -74,6 +75,24 @@ export const findReceipe = createAsyncThunk("findReceipe", async (id) => {
 
     const result = await fetch(`${API}receipe/find/${id}`, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await result.json();
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+});
+
+export const deleteReceipe = createAsyncThunk("deleteReceipe", async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const result = await fetch(`${API}receipe/delete/${id}`, {
+      method: "Post",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -151,7 +170,27 @@ const reciepeSlice = createSlice({
       .addCase(findReceipe.rejected, (state) => {
         state.loading = false;
         state.findReceipeSuccess = false;
-      });
+      })
+      .addCase(deleteReceipe.pending, (state) => {
+        state.loading = true;
+        state.deleteSuccess = false;
+      })
+      .addCase(deleteReceipe.fulfilled, (state, action) => {
+        state.loading = false;
+
+        if (action.payload.error) {
+          // state.errorsignup = action.payload.error;
+          state.deleteSuccess = action.payload.success;
+        } else {
+          // state.errorsignup = action.payload.message;
+          state.deleteSuccess = action.payload.success;
+
+        }
+      })
+      .addCase(deleteReceipe.rejected, (state) => {
+        state.loading = false;
+        state.deleteSuccess = false;
+      })
   },
 });
 

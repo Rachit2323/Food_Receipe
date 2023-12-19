@@ -2,20 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./Signup.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import xcode from "../../Images/logo 4.png";
+import { HiEye, HiEyeOff } from "react-icons/hi";
 import {
   signupUser,
-  signinUser
+  signinUser,
   // signinGoogle,
- 
-
 } from "../../Reducers/auth.js";
 
-
 const Signup = () => {
-
   const navigate = useNavigate();
-  const[signindetail,setSigninDetail]=useState(false);
+  const [signindetail, setSigninDetail] = useState(false);
 
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -26,31 +22,29 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-
-  const [signinData, setSignData] = useState({  
+  const [signinData, setSignData] = useState({
     email: "",
     password: "",
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const { successsignup,successsignin} = useSelector(
-    (state) => state.user
-  );
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
-  useEffect(()=>{
-    console.log(successsignin,successsignup);
-   if(successsignin||successsignup)
-   {
-      navigate("/dash")
-   }
-  },[successsignin,successsignup])
+  const { successsignup, successsignin } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    console.log(successsignin, successsignup);
+    if (successsignin || successsignup) {
+      navigate("/dash");
+    }
+  }, [successsignin, successsignup]);
 
   const handleLogin = () => {
     setSigninDetail(!signindetail);
     // navigate("/sign");
   };
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,20 +52,19 @@ const Signup = () => {
     dispatch(signupUser(formData));
   };
 
-
-  const handleSubmitSignin=(e)=>{
+  const handleSubmitSignin = (e) => {
     e.preventDefault();
 
     dispatch(signinUser(signinData));
-  }
+  };
   return (
     <div className="outer_signup">
       <div className="signup_inside">
         <div className="signup_done">
-          <span>{!signindetail ? 'Welcome Back :)' : 'Hello!'}</span>
+          <span>{!signindetail ? "Welcome Back :)" : "Hello!"}</span>
           <section>
             <p></p>
-            <span>{!signindetail ? ' Login ' : 'Create your Account'}</span>
+            <span>{!signindetail ? " Login " : "Create your Account"}</span>
             <p></p>
           </section>
 
@@ -100,6 +93,7 @@ const Signup = () => {
                   }
                 />
                 <input
+                  type={passwordVisible ? "text" : "password"}
                   placeholder="Password"
                   value={formData.password}
                   onChange={(e) =>
@@ -108,6 +102,7 @@ const Signup = () => {
                 />
                 <input
                   placeholder="Confirm Password"
+                  type={passwordVisible ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={(e) =>
                     setFormData({
@@ -117,12 +112,11 @@ const Signup = () => {
                   }
                 />
                 <button onClick={handleSubmit}>
-                  {signindetail ? 'SIGN UP' : 'SIGN IN'}
+                  {signindetail ? "SIGN UP" : "SIGN IN"}
                 </button>
               </>
             ) : (
               <>
-              
                 <input
                   placeholder="Email-id"
                   value={signinData.email}
@@ -130,15 +124,22 @@ const Signup = () => {
                     setSignData({ ...signinData, email: e.target.value })
                   }
                 />
-                <input
-                  placeholder="Password"
-                  value={signinData.password}
-                  onChange={(e) =>
-                    setSignData({ ...signinData, password: e.target.value })
-                  }
-                />
+                <div>
+                  {" "}
+                  <input
+                    placeholder="Password"
+                    type={passwordVisible ? "text" : "password"}
+                    value={signinData.password}
+                    onChange={(e) =>
+                      setSignData({ ...signinData, password: e.target.value })
+                    }
+                  />
+                  <div className="eye-icon" onClick={togglePasswordVisibility}>
+                    {passwordVisible ? <HiEyeOff /> : <HiEye />}
+                  </div>
+                </div>
                 <button onClick={handleSubmitSignin}>
-                  {signindetail ? 'SIGN UP' : 'SIGN IN'}
+                  {signindetail ? "SIGN UP" : "SIGN IN"}
                 </button>
               </>
             )}
@@ -149,7 +150,7 @@ const Signup = () => {
               ? "Already have an Account ?"
               : "Don't have an Account ?"}
             <strong onClick={handleLogin}>
-              {signindetail ? ' SIGN IN' : ' SIGN UP'}
+              {signindetail ? " SIGN IN" : " SIGN UP"}
             </strong>{" "}
           </h3>
         </div>

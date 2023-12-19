@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { getrecipedata, recipedata, findReceipe } from "../../Reducers/Reciepe";
+import {
+  getrecipedata,
+  recipedata,
+  findReceipe,
+  deleteReceipe,
+} from "../../Reducers/Reciepe";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userDetail } from "../../Reducers/auth.js";
@@ -21,6 +26,20 @@ const RecipeDetail = ({ edit }) => {
     ingredients: [{ name: "", description: "" }],
     steps: [""],
   });
+  const {
+    successallreceipe,
+    createreceipe,
+    currentreceipe,
+    findReceipedata,
+    findReceipeSuccess,
+    deleteSuccess,
+    allreceipe,
+  } = useSelector((state) => state.reciepe);
+
+  const { userdetailsucs, userpost, userdet } = useSelector(
+    (state) => state.user
+  );
+  const navigate = useNavigate();
 
   const [imageprev, setImagePrev] = useState(null);
 
@@ -31,7 +50,15 @@ const RecipeDetail = ({ edit }) => {
   }, [id]);
 
   // to delete all data
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    dispatch(deleteReceipe(id));
+  };
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      navigate("/dash");
+    }
+  }, [deleteSuccess]);
 
   const handleEdit = () => {
     setEditMode(true);
@@ -58,19 +85,7 @@ const RecipeDetail = ({ edit }) => {
     });
   };
 
-  const {
-    successallreceipe,
-    createreceipe,
-    currentreceipe,
-    findReceipedata,
-    findReceipeSuccess,
 
-    allreceipe,
-  } = useSelector((state) => state.reciepe);
-
-  const { userdetailsucs, userpost, userdet } = useSelector(
-    (state) => state.user
-  );
 
   useEffect(() => {
     if (successallreceipe) setAllReceipeData(allreceipe);
@@ -276,7 +291,7 @@ const RecipeDetail = ({ edit }) => {
                     <div className="w-full flex gap-2 justify-end">
                       <button
                         className="w-16 bg-red-400 hover:bg-red-600 rounded-md p-2 flex items-center justify-center"
-                        onClick={handleDelete}
+                        onClick={() => handleDelete()}
                       >
                         <AiOutlineDelete className="text-white" />
                       </button>
