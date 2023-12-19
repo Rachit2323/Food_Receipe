@@ -62,6 +62,7 @@ const RecipeDetail = ({ edit }) => {
 
   const handleEdit = () => {
     setEditMode(true);
+    
   };
 
   useEffect(() => {
@@ -299,7 +300,7 @@ const RecipeDetail = ({ edit }) => {
                       {!editMode && (
                         <button
                           className="w-16 bg-cyan-500 rounded-md p-1 flex items-center justify-center"
-                          onClick={handleEdit}
+                          onClick={()=>handleEdit()}
                         >
                           <AiOutlineEdit className="text-white" />
                         </button>

@@ -24,17 +24,24 @@ const Header = () => {
   const filteredRecipes = reciepeData.filter((recipe) => {
     const lowerCaseQuery = searchQuery.toLowerCase();
   
-    return (
-      recipe.recipeName.toLowerCase().includes(lowerCaseQuery) ||
-      recipe.createdBy.firstName.toLowerCase().includes(lowerCaseQuery) ||
-      recipe.ingredients
-        .map((ingredient) => ingredient.name.toLowerCase())
-        .some((name) => name.includes(lowerCaseQuery)) ||
-      recipe.steps
-        .map((step) => step.description.toLowerCase())
-        .some((description) => description.includes(lowerCaseQuery))
-    );
+    const recipeNameMatch = recipe.recipeName.toLowerCase().includes(lowerCaseQuery);
+    const createdByMatch = recipe.createdBy.firstName.toLowerCase().includes(lowerCaseQuery);
+    const ingredientMatch = recipe.ingredients
+      .some((ingredient) => 
+        ingredient.name.toLowerCase().includes(lowerCaseQuery) ||
+        ingredient.description.toLowerCase().includes(lowerCaseQuery)
+      );
+    const stepMatch = recipe.steps
+      .some((step) => step.toLowerCase().includes(lowerCaseQuery));
+    const overviewMatch = recipe.overview
+      .some((overviewItem) => 
+        overviewItem.name.toLowerCase().includes(lowerCaseQuery) ||
+        overviewItem.description.toLowerCase().includes(lowerCaseQuery)
+      );
+  
+    return recipeNameMatch || createdByMatch || ingredientMatch || stepMatch || overviewMatch;
   });
+  
   
 
   const handleAddStep = () => {
