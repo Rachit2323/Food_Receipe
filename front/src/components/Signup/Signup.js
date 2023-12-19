@@ -26,10 +26,15 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(true);
+  const [passwordVisible2, setPasswordVisible2] = useState(true);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const togglePasswordVisibility2 = () => {
+    setPasswordVisible2(!passwordVisible2);
   };
 
   const { successsignup, successsignin } = useSelector((state) => state.user);
@@ -92,25 +97,37 @@ const Signup = () => {
                     setFormData({ ...formData, email: e.target.value })
                   }
                 />
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                />
-                <input
-                  placeholder="Confirm Password"
-                  type={passwordVisible ? "text" : "password"}
-                  value={formData.confirmPassword}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      confirmPassword: e.target.value,
-                    })
-                  }
-                />
+                <div className="input_section">
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    placeholder="Password"
+                    style={{ width: "100%" }}
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                  />
+                  <div className="eye-icon" onClick={togglePasswordVisibility}>
+                    {passwordVisible ? <HiEye /> : <HiEyeOff />}
+                  </div>
+                </div>
+                <div className="input_section">
+                  <input
+                    placeholder="Confirm Password"
+                    type={passwordVisible2 ? "text" : "password"}
+                    value={formData.confirmPassword}
+                    style={{ width: "100%" }}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        confirmPassword: e.target.value,
+                      })
+                    }
+                  />
+                  <div className="eye-icon" onClick={togglePasswordVisibility2}>
+                    {passwordVisible2 ? <HiEye /> : <HiEyeOff />}
+                  </div>
+                </div>
                 <button onClick={handleSubmit}>
                   {signindetail ? "SIGN UP" : "SIGN IN"}
                 </button>
@@ -124,9 +141,10 @@ const Signup = () => {
                     setSignData({ ...signinData, email: e.target.value })
                   }
                 />
-                <div>
+                <div className="input_section">
                   {" "}
                   <input
+                    style={{ width: "100%" }}
                     placeholder="Password"
                     type={passwordVisible ? "text" : "password"}
                     value={signinData.password}
@@ -135,7 +153,7 @@ const Signup = () => {
                     }
                   />
                   <div className="eye-icon" onClick={togglePasswordVisibility}>
-                    {passwordVisible ? <HiEyeOff /> : <HiEye />}
+                    {passwordVisible ? <HiEye /> : <HiEyeOff />}
                   </div>
                 </div>
                 <button onClick={handleSubmitSignin}>

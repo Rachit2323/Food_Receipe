@@ -13,7 +13,6 @@ exports.createReceipe = async (req, res) => {
       overviewInputs,
     } = req.body;
 
-    console.log(req.body);
     const mycloud = await cloudinary.v2.uploader.upload(updatedPostData, {
       folder: "Food",
     });
@@ -52,6 +51,7 @@ exports.createReceipe = async (req, res) => {
   }
 };
 
+
 exports.getAllRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find().populate("createdBy", "firstName");
@@ -72,7 +72,7 @@ exports.findReceipe = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const recipe = await Recipe.findById(id).populate('createdBy', 'firstName');
+    const recipe = await Recipe.findById(id).populate("createdBy", "firstName");
 
     if (!recipe) {
       return res.status(404).json({
@@ -93,7 +93,6 @@ exports.findReceipe = async (req, res) => {
     });
   }
 };
-
 
 exports.deleteReceipe = async (req, res) => {
   try {
@@ -119,5 +118,3 @@ exports.deleteReceipe = async (req, res) => {
     });
   }
 };
-
-

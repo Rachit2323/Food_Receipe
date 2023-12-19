@@ -17,6 +17,7 @@ let initialState = {
 export const recipedata = createAsyncThunk(
   "recipedata",
   async ({
+ 
     recipeName,
     recipeDescription,
     updatedPostData,
@@ -27,6 +28,7 @@ export const recipedata = createAsyncThunk(
     try {
       const token = localStorage.getItem("token");
       const body = JSON.stringify({
+    
         recipeName,
         recipeDescription,
         updatedPostData,

@@ -1,324 +1,335 @@
 .outer_signup {
-    overflow-y: auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background-image: url(https://t4.ftcdn.net/jpg/02/86/17/89/360_F_286178925_8zk89O9uC5JJVPvqhvBMUpaRxp8AFXzD.jpg);
-    background-color: rgba(194, 218, 251, 0.9);
-    background-attachment: fixed;
-    background-repeat: repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .signup_inside {
-    border-radius: 35px;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35%;
-    height: 80%;
-  }
-  
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(https://t4.ftcdn.net/jpg/02/86/17/89/360_F_286178925_8zk89O9uC5JJVPvqhvBMUpaRxp8AFXzD.jpg);
+  background-color: rgba(194, 218, 251, 0.9);
+  background-attachment: fixed;
+  background-repeat: repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  
-  .signup_done {
-    width: 100%;
-    padding-bottom: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 15px;
-  }
+.signup_inside {
+  border-radius: 35px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  height: 80%;
+}
+
+.input_section {
+  display: flex;
+  width: 70%;
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 5%;
+  top: 37%;
+  cursor: pointer;
+
+}
+
+.signup_done {
+  width: 100%;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+.signup_done > span {
+  color: #000;
+  text-align: center;
+  font-family: "Nunito";
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.signup_done > section {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.signup_done > section > span {
+  color: rgba(0, 0, 34, 0.5);
+  text-align: center;
+  font-family: "Nunito";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+}
+.signup_done > section > p {
+  width: 23%;
+  height: 2px;
+
+  background: linear-gradient(
+      0deg,
+      rgba(170, 178, 200, 0.45) 0%,
+      rgba(170, 178, 200, 0.45) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(170, 178, 200, 0.45) 0%,
+      rgba(170, 178, 200, 0.45) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(170, 178, 200, 0.45) 0%,
+      rgba(170, 178, 200, 0.45) 100%
+    ),
+    rgba(170, 178, 200, 0.45);
+}
+
+.all_input {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.all_input input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #c0c0c0;
+  width: 70%;
+  background: #fff;
+  outline: none;
+}
+
+.all_input > button {
+  width: 74%;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #c0c0c0;
+  background: #1f64ff;
+  color: #fff;
+  text-align: center;
+  font-family: "Nunito";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+}
+.all_input > button:hover {
+  background: #1348c5;
+}
+
+.signup_done > p {
+  padding-top: 14px;
+  color: rgba(0, 0, 34, 0.5);
+  text-align: center;
+  font-family: " Nunito";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.buttons_signup {
+  display: flex;
+  width: 77%;
+  justify-content: space-between;
+}
+
+.buttons_signup > button {
+  border-radius: 5px;
+  width: 40%;
+  padding: 10px;
+  cursor: pointer;
+  color: rgba(0, 0, 34, 0.5);
+  font-family: "Nunito";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+
+  border: 1px solid #c0c0c0;
+  background: #fff;
+}
+
+.buttons_signup > button:hover {
+  background: #bdbdbd;
+}
+h3 {
+  margin: 0px;
+}
+
+.signup_done > h3 {
+  margin-top: 14px;
+  color: rgba(0, 0, 34, 0.5);
+  font-family: "Nunito";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.signup_done > h3 > strong {
+  color: #1f64ff;
+  cursor: pointer;
+}
+
+.signup_inside1 {
+  border-radius: 35px;
+  background: #fff;
+  display: flex;
+  width: 76%;
+  height: 55%;
+  gap: 30px;
+  flex-direction: column;
+  padding-top: 40px;
+  align-items: center;
+}
+
+.signup_inside1 > img {
+  width: 160px;
+}
+
+.signup_inside1 > span {
+  color: #000;
+  text-align: center;
+  font-family: " Nunito";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.signup_inside1 > section {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.signup_inside1 > section > span {
+  color: rgba(0, 0, 34, 0.5);
+  text-align: center;
+  font-family: "Nunito";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+}
+.signup_inside1 > section > p {
+  width: 23%;
+  height: 2px;
+
+  background: linear-gradient(
+      0deg,
+      rgba(170, 178, 200, 0.45) 0%,
+      rgba(170, 178, 200, 0.45) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(170, 178, 200, 0.45) 0%,
+      rgba(170, 178, 200, 0.45) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(170, 178, 200, 0.45) 0%,
+      rgba(170, 178, 200, 0.45) 100%
+    ),
+    rgba(170, 178, 200, 0.45);
+}
+
+.all_button_select {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  justify-content: center;
+}
+
+.all_button_select > button {
+  border-radius: 5px;
+  border: 1px solid #c0c0c0;
+  cursor: pointer;
+  background: #fff;
+  padding: 17px 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input_button_types {
+  display: flex;
+  width: 40%;
+  padding-top: 50px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.input_button_types > input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #c0c0c0;
+  width: 70%;
+  background: #fff;
+  outline: none;
+}
+
+.input_button_types > button {
+  border-radius: 5px;
+  background: #1f64ff;
+  padding: 11px 23px;
+  outline: none;
+  border: 0px;
+  cursor: pointer;
+  color: white;
+}
+
+.hover_buton:hover {
+  background: rgb(195, 195, 195);
+}
+
+@media (max-width: 746px) {
   .signup_done > span {
-    color: #000;
-    text-align: center;
-    font-family: "Nunito";
-    font-size: 35px;
-    font-style: normal;
-    font-weight: 700;
+    font-size: 28px;
   }
-  
-  .signup_done > section {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-  }
-  
   .signup_done > section > span {
-    color: rgba(0, 0, 34, 0.5);
-    text-align: center;
-    font-family: "Nunito";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
+    font-size: 12px;
   }
-  .signup_done > section > p {
-    width: 23%;
-    height: 2px;
-  
-    background: linear-gradient(
-        0deg,
-        rgba(170, 178, 200, 0.45) 0%,
-        rgba(170, 178, 200, 0.45) 100%
-      ),
-      linear-gradient(
-        0deg,
-        rgba(170, 178, 200, 0.45) 0%,
-        rgba(170, 178, 200, 0.45) 100%
-      ),
-      linear-gradient(
-        0deg,
-        rgba(170, 178, 200, 0.45) 0%,
-        rgba(170, 178, 200, 0.45) 100%
-      ),
-      rgba(170, 178, 200, 0.45);
-  }
-  
-  .all_input {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    padding-top: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .all_input input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #c0c0c0;
-    width: 70%;
-    background: #fff;
-    outline: none;
-  }
-  
-  .all_input > button {
-    width: 74%;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #c0c0c0;
-    background: #1f64ff;
-    color: #fff;
-    text-align: center;
-    font-family: "Nunito";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-  }
-  .all_input > button:hover {
-    background: #1348c5;
-  }
-  
-  .signup_done > p {
-    padding-top: 14px;
-    color: rgba(0, 0, 34, 0.5);
-    text-align: center;
-    font-family: " Nunito";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 800;
-  }
-  
-  .buttons_signup {
-    display: flex;
-    width: 77%;
-    justify-content: space-between;
-  }
-  
   .buttons_signup > button {
-    border-radius: 5px;
-    width: 40%;
-    padding: 10px;
-    cursor: pointer;
-    color: rgba(0, 0, 34, 0.5);
-    font-family: "Nunito";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-  
-    border: 1px solid #c0c0c0;
-    background: #fff;
+    font-size: 11px;
+    padding: 8px;
   }
-  
-  .buttons_signup > button:hover {
-    background: #bdbdbd;
-  }
-  h3 {
-    margin: 0px;
-  }
-  
   .signup_done > h3 {
-    margin-top: 14px;
-    color: rgba(0, 0, 34, 0.5);
-    font-family: "Nunito";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
+    font-size: 12px;
   }
-  
-  .signup_done > h3 > strong {
-    color: #1f64ff;
-    cursor: pointer;
-  }
-  
-  .signup_inside1 {
-    border-radius: 35px;
-    background: #fff;
-    display: flex;
-    width: 76%;
-    height: 55%;
-    gap: 30px;
-    flex-direction: column;
-    padding-top: 40px;
-    align-items: center;
-  }
-  
-  .signup_inside1 > img {
-    width: 160px;
-  }
-  
-  .signup_inside1 > span {
-    color: #000;
-    text-align: center;
-    font-family: " Nunito";
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-  }
-  
-  .signup_inside1 > section {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-  }
-  
+}
+
+@media (max-width: 1036px) {
   .signup_inside1 > section > span {
-    color: rgba(0, 0, 34, 0.5);
-    text-align: center;
-    font-family: "Nunito";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
+    font-size: 10px;
   }
-  .signup_inside1 > section > p {
-    width: 23%;
-    height: 2px;
-  
-    background: linear-gradient(
-        0deg,
-        rgba(170, 178, 200, 0.45) 0%,
-        rgba(170, 178, 200, 0.45) 100%
-      ),
-      linear-gradient(
-        0deg,
-        rgba(170, 178, 200, 0.45) 0%,
-        rgba(170, 178, 200, 0.45) 100%
-      ),
-      linear-gradient(
-        0deg,
-        rgba(170, 178, 200, 0.45) 0%,
-        rgba(170, 178, 200, 0.45) 100%
-      ),
-      rgba(170, 178, 200, 0.45);
-  }
-  
   .all_button_select {
-    display: flex;
-    gap: 30px;
-    width: 100%;
-    justify-content: center;
+    gap: 12px;
+    flex-direction: column;
+    width: 55%;
   }
-  
   .all_button_select > button {
-    border-radius: 5px;
-    border: 1px solid #c0c0c0;
-    cursor: pointer;
-    background: #fff;
-    padding: 17px 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 10px 70px;
   }
-  
   .input_button_types {
-    display: flex;
-    width: 40%;
-    padding-top: 50px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+    padding-top: 0px;
+    flex-direction: column;
   }
-  
-  .input_button_types > input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #c0c0c0;
-    width: 70%;
-    background: #fff;
-    outline: none;
+  .signup_inside1 {
+    height: 65%;
   }
-  
-  .input_button_types > button {
-    border-radius: 5px;
-    background: #1f64ff;
-    padding: 11px 23px;
-    outline: none;
-    border: 0px;
-    cursor: pointer;
-    color: white;
-  }
-  
-  .hover_buton:hover{
-    background: rgb(195, 195, 195);
-  }
-  
-  @media (max-width: 746px) {
-    .signup_done > span{
-      font-size: 28px;
-    }
-    .signup_done > section > span {
-      font-size: 12px;
-    }
-    .buttons_signup > button{
-      font-size: 11px;
-      padding: 8px;
-    }
-    .signup_done > h3{
-      font-size: 12px;
-    }
-   
-  }
-  
-  @media (max-width: 1036px) {
-    .signup_inside1 > section > span{
-      font-size: 10px;
-    }
-    .all_button_select {
-      gap: 12px;
-      flex-direction: column;
-      width: 55%;
-    }
-    .all_button_select > button{
-      padding: 10px 70px;
-    }
-    .input_button_types{
-      padding-top: 0px;
-      flex-direction: column;
-    }
-    .signup_inside1{
-      height: 65%;
-    }
-  }
+}

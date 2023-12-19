@@ -19,30 +19,39 @@ const Header = () => {
   const [stepInputs, setStepInputs] = useState([""]);
   const [ingredientInputs, setIngredientInputs] = useState([""]);
   const [reciepeData, setReciepeData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredRecipes = reciepeData.filter((recipe) => {
     const lowerCaseQuery = searchQuery.toLowerCase();
-  
-    const recipeNameMatch = recipe.recipeName.toLowerCase().includes(lowerCaseQuery);
-    const createdByMatch = recipe.createdBy.firstName.toLowerCase().includes(lowerCaseQuery);
-    const ingredientMatch = recipe.ingredients
-      .some((ingredient) => 
+
+    const recipeNameMatch = recipe.recipeName
+      .toLowerCase()
+      .includes(lowerCaseQuery);
+    const createdByMatch = recipe.createdBy.firstName
+      .toLowerCase()
+      .includes(lowerCaseQuery);
+    const ingredientMatch = recipe.ingredients.some(
+      (ingredient) =>
         ingredient.name.toLowerCase().includes(lowerCaseQuery) ||
         ingredient.description.toLowerCase().includes(lowerCaseQuery)
-      );
-    const stepMatch = recipe.steps
-      .some((step) => step.toLowerCase().includes(lowerCaseQuery));
-    const overviewMatch = recipe.overview
-      .some((overviewItem) => 
+    );
+    const stepMatch = recipe.steps.some((step) =>
+      step.toLowerCase().includes(lowerCaseQuery)
+    );
+    const overviewMatch = recipe.overview.some(
+      (overviewItem) =>
         overviewItem.name.toLowerCase().includes(lowerCaseQuery) ||
         overviewItem.description.toLowerCase().includes(lowerCaseQuery)
-      );
-  
-    return recipeNameMatch || createdByMatch || ingredientMatch || stepMatch || overviewMatch;
+    );
+
+    return (
+      recipeNameMatch ||
+      createdByMatch ||
+      ingredientMatch ||
+      stepMatch ||
+      overviewMatch
+    );
   });
-  
-  
 
   const handleAddStep = () => {
     setStepInputs([...stepInputs, ""]);
@@ -61,7 +70,6 @@ const Header = () => {
   useEffect(() => {
     dispatch(getrecipedata());
   }, []);
-
 
   const handleRemoveStep = (index) => {
     const newSteps = [...stepInputs];
@@ -85,10 +93,9 @@ const Header = () => {
     setIngredientInputs(newIngredients);
   };
 
-
-  const openFood=(id)=>{
+  const openFood = (id) => {
     // navigate(`/add/${id}`);
-  }
+  };
   const AddFood = () => {
     // setAddFoodInput(true);
     navigate(`/add/0`);
@@ -111,7 +118,7 @@ const Header = () => {
         setUpdatedPostData(Reader.result);
     };
   };
-  
+
   const handleSubmit = () => {
     dispatch(
       recipedata({
@@ -139,7 +146,6 @@ const Header = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-         
         </div>
         <span className="text-5xl  text-center lg:text-left font-serif text-gray-200 w-full block pt-6 pb-4 mx-auto">
           Foodopedia
@@ -157,43 +163,37 @@ const Header = () => {
         </h4>
         <hr className="w-screen border-t border-gray-500 mt-2 lg:mt-0" />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full p-4">
-        {searchQuery ? (
-            // If searchQuery is not empty, use filtered recipes
-            filteredRecipes.map((recipe) => (
-              <div  key={recipe._id} onClick={()=>openFood(recipe._id)}>
-              <FoodCard
-                id={recipe._id}
-                dull={addFoodInput}
-                createdBy={recipe.createdBy.firstName}
-                ingredients={recipe.ingredients}
-                recipeDescription={recipe.recipeDescription}
-                recipeName={recipe.recipeName}
-                recipePhoto={recipe.recipePhoto}
-                steps={recipe.steps}
-                
-              />
-              </div>
-            ))
-          ) : (
-            // If searchQuery is empty, use all recipes
-            reciepeData.map((recipe) => (
-              <div  key={recipe._id} onClick={()=>openFood(recipe._id)}>
-              <FoodCard
-              id={recipe._id}
-                dull={addFoodInput}
-                createdBy={recipe.createdBy.firstName}
-                ingredients={recipe.ingredients}
-                recipeDescription={recipe.recipeDescription}
-                recipeName={recipe.recipeName}
-                recipePhoto={recipe.recipePhoto}
-                steps={recipe.steps}
-                
-              />
-              </div>
-            ))
-          )}
-
-       
+          {searchQuery
+            ? // If searchQuery is not empty, use filtered recipes
+              filteredRecipes.map((recipe) => (
+                <div key={recipe._id} onClick={() => openFood(recipe._id)}>
+                  <FoodCard
+                    id={recipe._id}
+                    dull={addFoodInput}
+                    createdBy={recipe.createdBy.firstName}
+                    ingredients={recipe.ingredients}
+                    recipeDescription={recipe.recipeDescription}
+                    recipeName={recipe.recipeName}
+                    recipePhoto={recipe.recipePhoto}
+                    steps={recipe.steps}
+                  />
+                </div>
+              ))
+            : // If searchQuery is empty, use all recipes
+              reciepeData.map((recipe) => (
+                <div key={recipe._id} onClick={() => openFood(recipe._id)}>
+                  <FoodCard
+                    id={recipe._id}
+                    dull={addFoodInput}
+                    createdBy={recipe.createdBy.firstName}
+                    ingredients={recipe.ingredients}
+                    recipeDescription={recipe.recipeDescription}
+                    recipeName={recipe.recipeName}
+                    recipePhoto={recipe.recipePhoto}
+                    steps={recipe.steps}
+                  />
+                </div>
+              ))}
         </div>
       </div>
 
@@ -335,7 +335,7 @@ const Header = () => {
 
             <button
               className="bg-green-500 text-gray-800  border border-green-600 py-2 px-4 rounded cursor-pointer hover:bg-green-600"
-              onClick={handleSubmit}
+              // onClick={() => handleSubmit}
             >
               Submit
             </button>
