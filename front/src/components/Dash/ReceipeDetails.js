@@ -48,8 +48,16 @@ const RecipeDetail = ({ edit }) => {
   useEffect(() => {
     if (id !== "0" && id !== undefined) {
       dispatch(findReceipe(id));
+    } else if (id === "0") {
+      setEditMode(true);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (editMode && id === "0") {
+
+    }
+  }, [editMode]);
 
   const handleDelete = () => {
     dispatch(deleteReceipe(id));
@@ -72,7 +80,9 @@ const RecipeDetail = ({ edit }) => {
   }, [edit, editMode]);
 
   useEffect(() => {
-    dispatch(userDetail());
+    if (id !== "0" && id !== undefined) {
+      dispatch(userDetail());
+    }
   }, []);
 
   const handleShowAllIngredients = () => {
@@ -106,7 +116,9 @@ const RecipeDetail = ({ edit }) => {
   }, [findReceipedata, findReceipeSuccess]);
 
   useEffect(() => {
-    dispatch(getrecipedata());
+    if (id !== "0" && id !== undefined) {
+      dispatch(getrecipedata());
+    }
   }, []);
 
   useEffect(() => {
@@ -237,8 +249,6 @@ const RecipeDetail = ({ edit }) => {
     </>
   );
 
-  console.log(updatedPostData);
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
@@ -299,12 +309,12 @@ const RecipeDetail = ({ edit }) => {
                 <div className="w-full">
                   {userdet._id === currentUser?.createdBy?._id && (
                     <div className="w-full flex gap-2 justify-end">
-                      <button
+                     {(id!=="0")&&( <button
                         className="w-16 bg-red-400 hover:bg-red-600 rounded-md p-2 flex items-center justify-center"
                         onClick={() => handleDelete()}
                       >
                         <AiOutlineDelete className="text-white" />
-                      </button>
+                      </button>)}
 
                       {!editMode && (
                         <button
@@ -553,7 +563,24 @@ const RecipeDetail = ({ edit }) => {
 
                     <AddButton name={"step"} addFun={handleAddStep} />
                   </div>
-                  {editMode && id !== "0" ? (
+                  {editMode &&
+                    (id !== "0" ? (
+                      <button
+                        onClick={() => handleUpdate()}
+                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+                      >
+                        Update
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleSubmit}
+                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+                      >
+                        Submit
+                      </button>
+                    ))}
+
+                  {/* {editMode && id !== "0" ? (
                     <button
                       onClick={() => handleUpdate()}
                       className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
@@ -567,7 +594,7 @@ const RecipeDetail = ({ edit }) => {
                     >
                       Submit
                     </button>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
