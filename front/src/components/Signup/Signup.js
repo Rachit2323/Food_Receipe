@@ -65,7 +65,7 @@ const Signup = () => {
     <div className="outer_signup">
       <div className="signup_inside">
         <div className="signup_done">
-          <span>{!signindetail ? "Welcome Back :)" : "Hello!"}</span>
+          <span>{!signindetail ? "Welcome Back :)" : "Hello !"}</span>
           <section>
             <p></p>
             <span>{!signindetail ? " Login " : "Create your Account"}</span>

@@ -214,6 +214,7 @@ const RecipeDetail = ({ edit }) => {
   };
 
   const handleDeleteStep = (index) => {
+    console.log("dele");
     const newData = { ...data };
     newData.steps.splice(index, 1);
     setData(newData);
@@ -285,7 +286,7 @@ const RecipeDetail = ({ edit }) => {
         <div className="w-full h-96 left-[4.32px] top-[6.71px] absolute  rounded-2xl" />
       </div>
       {id !== "0" && (
-        <div className=" left-[29.13px] top-[16.19px] absolute text-gray-200 text-5xl font-serif p-1">
+        <div className=" left-[29.13px] top-[16.19px] absolute text-gray-200 text-5xl font-serif p-4">
           Receipe By : {currentUser?.createdBy?.firstName}
         </div>
       )}
@@ -340,7 +341,7 @@ const RecipeDetail = ({ edit }) => {
                       onChange={handleChange}
                     />
                   ) : (
-                    <div className="md:w-4/5 text-gray-200 text-justify text-sm font-normal font-['Roboto'] leading-none">
+                    <div className="md:w-4/5 text-gray-300 text-justify text-sm font-normal font-['Roboto'] leading-none">
                       {data?.recipeDescription}
                     </div>
                   )}
@@ -364,7 +365,7 @@ const RecipeDetail = ({ edit }) => {
                     </>
                   ) : (
                     <img
-                      className="mt-4 mb-4 lg:hidden h-60 shadow-2xl w-1/3 object-cover rounded-2xl"
+                      className="mt-4 mb-4 lg:hidden h-60 shadow-2xl w-1/2 object-cover rounded-3xl"
                       src={imageprev}
                       alt="..."
                     />
@@ -372,10 +373,10 @@ const RecipeDetail = ({ edit }) => {
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <div className="w-40 h-5 text-neutral-400 text-xl font-extrabold ">
+                  <div className="w-50 h-5 text-gray-200 text-2xl font-extrabold  mt-3 underline">
                     Overview
                   </div>
-                  <div className="md:w-96 mt-2 grid grid-cols-2 gap-2">
+                  <div className="md:w-96 mt-2 grid grid-cols-2 gap-4">
                     {data?.overview?.map((item, index) => (
                       <div
                         key={index}
@@ -390,17 +391,17 @@ const RecipeDetail = ({ edit }) => {
                           </div>
                         )}
 
-                        <div className="w-12 h-10 bg-white rounded-lg shadow">
+                        {/* <div className="w-12 h-10 bg-white rounded-lg shadow">
                           <div className="w-12 h-10 bg-blue-50 rounded-lg" />
-                        </div>
-                        <div>
+                        </div> */}
+                        <div className="hover:scale-125 cursor-pointer">
                           {editMode ? (
                             <>
                               <input
                                 className="text-xs w-full font-medium text-neutral-700 outline-none"
                                 disabled={!editMode}
                                 name="name"
-                                placeholder="name..."
+                                placeholder="Time"
                                 value={item?.name || ""}
                                 onChange={(e) => handleOverviewChange(e, index)}
                               />
@@ -408,7 +409,7 @@ const RecipeDetail = ({ edit }) => {
                                 className="text-xs w-full font-medium text-neutral-700 outline-none"
                                 disabled={!editMode}
                                 name="description"
-                                placeholder="Description..."
+                                placeholder="1 min"
                                 value={item.description || ""}
                                 onChange={(e) => handleOverviewChange(e, index)}
                               />
@@ -431,10 +432,10 @@ const RecipeDetail = ({ edit }) => {
                   <AddButton name={"overview"} addFun={handleAddOverview} />
 
                   {/* Ingredients */}
-                  <div className="w-40 h-5 text-neutral-400 text-xl font-extrabold ">
+                  <div className="w-50 h-5 text-gray-200 text-2xl font-extrabold  mt-3 underline">
                     Ingredients
                   </div>
-                  <div className="md:w-96 mt-2 grid grid-cols-2 gap-2">
+                  <div className="md:w-96 mt-2 grid grid-cols-2 gap-4">
                     {data?.ingredients?.map((ingredient, index) => (
                       <div
                         key={index} // Add key prop here
@@ -454,10 +455,10 @@ const RecipeDetail = ({ edit }) => {
                           </div>
                         )}
 
-                        <div className="w-12 h-10 bg-white rounded-lg shadow">
+                        {/* <div className="w-12 h-10 bg-white rounded-lg shadow">
                           <div className="w-12 h-10 bg-blue-50 rounded-lg" />
-                        </div>
-                        <div>
+                        </div> */}
+                        <div className="hover:scale-125 cursor-pointer">
                           {editMode ? (
                             <>
                               <input
@@ -517,10 +518,10 @@ const RecipeDetail = ({ edit }) => {
                   {/* Steps */}
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-col gap-4">
-                      <div className="w-40 h-5 text-neutral-400 text-xl font-extrabold ">
+                      <div className="w-50 h-5 text-gray-200 text-2xl font-extrabold underline">
                         Steps
                       </div>
-                      <div className=" mt-2 grid grid-cols-1 gap-2 list-decimal">
+                      <div className=" mt-2 grid grid-cols-1 gap-4 list-decimal">
                         {data?.steps?.map((step, index) => (
                           <li
                             key={index}
@@ -552,7 +553,7 @@ const RecipeDetail = ({ edit }) => {
 
                     <AddButton name={"step"} addFun={handleAddStep} />
                   </div>
-                  {editMode ? (
+                  {editMode && id !== "0" ? (
                     <button
                       onClick={() => handleUpdate()}
                       className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"

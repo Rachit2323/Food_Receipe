@@ -133,8 +133,6 @@ export const editdata = createAsyncThunk("editdata", async ({
       stepInputs,
       overviewInputs,
     });
-
-
     const result = await fetch(`${API}receipe/edit`, {
       method: "Post",
       headers: {
