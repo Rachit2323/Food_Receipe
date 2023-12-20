@@ -156,7 +156,7 @@ const Header = () => {
   return (
     <>
       <div
-        className={`flex p-4 bg-gray-900 flex-col h-screen w-screen items-center ${
+        className={`flex p-4 bg-gray-900  flex-col h-screen w-screen items-center ${
           addFoodInput && "bg-gray-500"
         }`}
       >

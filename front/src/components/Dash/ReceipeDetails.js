@@ -309,9 +309,11 @@ const RecipeDetail = ({ edit }) => {
         <div className="w-full h-96 left-[4.32px] top-[6.71px] absolute  rounded-2xl" />
       </div>
       {id !== "0" && (
-        <div className=" left-[29.13px] top-[16.19px] absolute text-gray-200 text-5xl font-serif p-4">
-          Receipe By : {currentUser?.createdBy?.firstName}
-        </div>
+     <div className="left-[29.13px] top-[16.19px] absolute text-gray-200 lg:text-5xl md:text-4xl xl:text-5xl text-2xl   font-serif p-4 ">
+     Receipe By: {currentUser?.createdBy?.firstName}
+   </div>
+   
+     
       )}
 
       <div className="w-full absolute top-16 ">
