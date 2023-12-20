@@ -8,7 +8,7 @@ const isAuthenticated = (req, res, next) => {
         return res.status(401).json({ error: 'Not authorized' });
     }
 
-    const token = authorizationHeader.slice(7); // Remove 'Bearer ' prefix
+    const token = authorizationHeader.slice(7); 
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);

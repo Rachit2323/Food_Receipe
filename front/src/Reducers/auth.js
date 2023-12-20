@@ -128,11 +128,13 @@ const authSlice = createSlice({
       })
       .addCase(signinUser.fulfilled, (state, action) => {
         state.loading = false;
-
+      
         if (action.payload.error) {
+          // console.log(action.payload);
           state.errorsignin = action.payload.error;
           state.successsignin = action.payload.success;
         } else {
+         
           state.errorsignin = action.payload.message;
           state.successsignin = action.payload.success;
         }

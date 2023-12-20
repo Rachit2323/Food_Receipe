@@ -59,14 +59,12 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
-
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({
         success: false,
-        error: "Email does not exist",
+        message: "Email does not exist",
       });
     }
 
@@ -75,7 +73,7 @@ exports.signin = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({
         success: false,
-        error: "Invalid password",
+        message: "Invalid password",
       });
     }
 
