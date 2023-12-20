@@ -58,10 +58,8 @@ const Header = () => {
     setStepInputs([...stepInputs, ""]);
   };
 
-  const {  userdet } = useSelector(
-    (state) => state.user
-  );
-  
+  const { userdet } = useSelector((state) => state.user);
+
   const { allreceipe, successallreceipe, createreceipe, loading } = useSelector(
     (state) => state.reciepe
   );
@@ -75,7 +73,6 @@ const Header = () => {
   useEffect(() => {
     dispatch(getrecipedata());
     dispatch(userDetail());
-    
   }, []);
 
   const handleRemoveStep = (index) => {
@@ -126,28 +123,26 @@ const Header = () => {
     };
   };
 
-  const handleSubmit = () => {
-    dispatch(
-      recipedata({
-        recipeName,
-        recipeDescription,
-        updatedPostData,
-        ingredientInputs,
-        stepInputs,
-      })
-    );
-  };
+  // const handleSubmit = () => {
+  //   dispatch(
+  //     recipedata({
+  //       recipeName,
+  //       recipeDescription,
+  //       updatedPostData,
+  //       ingredientInputs,
+  //       stepInputs,
+  //     })
+  //   );
+  // };
 
-  if (loading) {
-    return <div className="text-white text-3xl">Loading...</div>;
-  }
-
+  // if (loading) {
+  //   return <div className="text-white text-3xl">Loading...</div>;
+  // }
 
   const handleLogout = () => {
-    navigate("/");
-    localStorage.clear(); 
+    // navigate("/");
+    // localStorage.clear();
   };
-  
 
   return (
     <>
@@ -156,23 +151,26 @@ const Header = () => {
           addFoodInput && "bg-gray-500"
         }`}
       >
-     <div className="flex w-full items-center justify-between mb-4 lg:mb-0">
-  <span className="text-xl font-bold text-blue-600 border-b-2 border-blue-600">
-    Hi {userdet?.firstName}
-  </span>
+        <div className="flex w-full items-center justify-between mb-4 lg:mb-0">
+          <span className="text-xl font-bold text-blue-600 border-b-2 border-blue-600">
+            Hi {userdet?.firstName}
+          </span>
 
-  <input
-    type="text"
-    placeholder="Search... (Ingredients, Step)"
-    className="py-2 px-3 w-1/2 focus:outline-none border-gray-300 rounded border ml-2"
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-  />
+          <input
+            type="text"
+            placeholder="Search... (Ingredients, Step)"
+            className="py-2 px-3 w-1/2 focus:outline-none border-gray-300 rounded border ml-2"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
 
-  <button className="border border-red-500 px-4 py-2 cursor-pointer bg-white text-red-500 hover:bg-red-500 hover:text-white ml-2" onClick={handleLogout()}>
-    Logout
-  </button>
-</div>
+          <button
+            className="border border-red-500 px-4 py-2 cursor-pointer bg-white text-red-500 hover:bg-red-500 hover:text-white ml-2"
+            onClick={()=>handleLogout()}
+          >
+            Logout
+          </button>
+        </div>
 
         <span className="text-5xl  text-center lg:text-left font-serif text-gray-200 w-full block pt-6 pb-4 mx-auto">
           Foodopedia
@@ -224,7 +222,7 @@ const Header = () => {
         </div>
       </div>
 
-      {addFoodInput && (
+      {/* {addFoodInput && (
         <div className="bg-gray-700 fixed overflow-y-auto max-h-screen mb-8 w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-3 box-sizing-border rounded-xl ">
           <button
             className="absolute top-0 right-0 m-4 p-2 text-gray-400 hover:text-gray-200 cursor-pointer"
@@ -368,7 +366,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

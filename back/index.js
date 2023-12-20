@@ -11,9 +11,9 @@ const cloudinary = require("cloudinary");
 const userRoutes = require("./routes/user.js");
 const receipeRoutes = require("./routes/Reciepe.js");
 // const postRoutes = require("./routes/post.js");
-// const URI =
-//   "mongodb+srv://Rachit23:UhP8Iiyp4xxptvmM@cluster0.fgnb20h.mongodb.net/zero";
-const URI="mongodb://localhost:27017/food";
+const URI =
+  "mongodb+srv://Rachit23:UhP8Iiyp4xxptvmM@cluster0.fgnb20h.mongodb.net/food";
+// const URI="mongodb://localhost:27017/food";
 
 cloudinary.v2.config({
   cloud_name: "dyedquiym",

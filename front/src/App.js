@@ -2,47 +2,26 @@ import './App.css';
 import Dash from './components/Dash/Dash.js';
 import RecipeDetail from './components/Dash/ReceipeDetails.js';
 import Signup from './components/Signup/Signup.js';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-
-  const isAuthenticated = localStorage.getItem('token');
-
   return (
     <Router>
-      <div className="App">
+
         <Routes>
           {/* Public Route - Sign Up */}
-          <Route
-            path="/"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/dash" />
-              ) : (
-                <Signup />
-              )
-            }
-          />
+          <Route path="/" element={<Signup />} />
 
-          {/* Private Route - Dashboard */}
-          <Route
-            path="/dash"
-            element={isAuthenticated ? <Dash /> : <Navigate to="/" />}
-          />
+          {/* Public Route - Dashboard */}
+          <Route path="/dash" element={<Dash />} />
 
-          {/* Private Route - Add Recipe */}
-          <Route
-            path="/add/:id"
-            element={isAuthenticated ? <RecipeDetail edit={false} /> : <Navigate to="/" />}
-          />
+          {/* Public Route - Add Recipe */}
+          <Route path="/add/:id" element={<RecipeDetail edit={false} />} />
 
-          {/* Private Route - Edit Recipe */}
-          <Route
-            path="/edit/:id"
-            element={isAuthenticated ? <RecipeDetail edit={true} /> : <Navigate to="/" />}
-          />
+          {/* Public Route - Edit Recipe */}
+          <Route path="/edit/:id" element={<RecipeDetail edit={true} />} />
         </Routes>
-      </div>
+
     </Router>
   );
 }

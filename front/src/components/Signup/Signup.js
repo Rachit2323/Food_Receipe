@@ -40,7 +40,6 @@ const Signup = () => {
   const { successsignup, successsignin } = useSelector((state) => state.user);
 
   useEffect(() => {
-
     if (successsignin || successsignup) {
       navigate("/dash");
     }
@@ -58,7 +57,7 @@ const Signup = () => {
 
   const handleSubmitSignin = (e) => {
     e.preventDefault();
-
+    console.log('sign')
     dispatch(signinUser(signinData));
   };
   return (
@@ -71,7 +70,7 @@ const Signup = () => {
             <span>{!signindetail ? " Login " : "Create your Account"}</span>
             <p></p>
           </section>
-
+         <form className="w-full">
           <div className="all_input">
             {signindetail ? (
               <>
@@ -161,7 +160,7 @@ const Signup = () => {
               </>
             )}
           </div>
-
+          </form>
           <h3>
             {signindetail
               ? "Already have an Account ?"
