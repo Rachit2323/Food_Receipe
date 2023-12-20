@@ -11,6 +11,7 @@ let initialState = {
   errorsignin: "",
   successsignin: false,
   successsignup: false,
+  logoutstate:false,
   signupdata: "",
   userpost: {},
   userdet: {},
@@ -116,6 +117,7 @@ const authSlice = createSlice({
           state.errorsignup = action.payload.message;
           state.successsignup = action.payload.success;
           state.signupdata = action.payload.data;
+          state.logoutstate=false;
         }
       })
       .addCase(signupUser.rejected, (state) => {
@@ -137,6 +139,7 @@ const authSlice = createSlice({
          
           state.errorsignin = action.payload.message;
           state.successsignin = action.payload.success;
+          state.logoutstate=false;
         }
       })
       .addCase(signinUser.rejected, (state) => {
@@ -167,10 +170,11 @@ const authSlice = createSlice({
         state.successsignup = false;
       })
       .addCase(logout.fulfilled, (state, action) => {
+        // state.errorsignin ="Logout"
         state.loading = false;
-
         state.successsignup = false;
         state.successsignin=false;
+        state.logoutstate=true;
       })
       .addCase(logout.rejected, (state) => {
         state.loading = true;

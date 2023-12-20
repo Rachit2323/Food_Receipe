@@ -8,6 +8,7 @@ const API ="https://food-receipe-henna.vercel.app/";
 
 let initialState = {
   loading: false,
+  logoutstate:false,
   allreceipe: {},
   successallreceipe: false,
   createreceipe: false,
@@ -163,6 +164,7 @@ const reciepeSlice = createSlice({
           state.createreceipe = action.payload.success;
         } else {
           // state.errorsignup = action.payload.message;
+          state.logoutstate=false;
           state.createreceipe = action.payload.success;
           state.currentreceipe = action.payload.data;
         }

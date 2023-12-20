@@ -6,6 +6,7 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 import {
   signupUser,
   signinUser,
+  logout,
   // signinGoogle,
 } from "../../Reducers/auth.js";
 import { ToastContainer, toast } from "react-toastify";
@@ -39,18 +40,20 @@ const Signup = () => {
     setPasswordVisible2(!passwordVisible2);
   };
 
-  const { successsignup, successsignin ,errorsignin } = useSelector((state) => state.user);
+  const { successsignup, successsignin, errorsignin ,logoutstate } = useSelector(
+    (state) => state.user
+  );
+
 
   useEffect(() => {
     if (successsignin || successsignup) {
       navigate("/dash");
-    }
-    else if(!successsignin&&errorsignin)
-    {
+    } else if ( !successsignin && errorsignin &&!logoutstate) {
       toast.error(errorsignin);
     }
-  }, [successsignin, successsignup,errorsignin]);
 
+  }, [successsignin, successsignup, errorsignin,logoutstate ]);
+  
   const handleLogin = () => {
     setSigninDetail(!signindetail);
   };
@@ -63,7 +66,7 @@ const Signup = () => {
 
   const handleSubmitSignin = (e) => {
     e.preventDefault();
-
+    
     dispatch(signinUser(signinData));
   };
   return (

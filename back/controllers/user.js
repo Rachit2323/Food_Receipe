@@ -82,7 +82,7 @@ exports.signin = async (req, res) => {
     res.status(200).json({
       success: true,
       token: token,
-      message: "User signed in successfully",
+      message: "Logout successfully",
     });
   } catch (error) {
     console.log(error);
