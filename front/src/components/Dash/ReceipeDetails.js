@@ -250,6 +250,7 @@ const RecipeDetail = ({ edit }) => {
     </>
   );
 
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
@@ -264,7 +265,6 @@ const RecipeDetail = ({ edit }) => {
         //2 means image is process and 0 means image is not processed
         setUpdatedPostData(Reader.result);
     };
-
 
   };
 
@@ -405,7 +405,7 @@ const RecipeDetail = ({ edit }) => {
                     </>
                   ) : (
                     <img
-                      className="mt-4 mb-4 lg:hidden h-60 shadow-2xl w-1/2 object-cover rounded-3xl"
+                      className="mt-4 mb-4 lg:hidden h-60 shadow-2xl xs:width-full width-full sm:width-full bg-white  object-cover rounded-3xl"
                       src={imageprev||imagePreview}
                       alt="..."
                     />
