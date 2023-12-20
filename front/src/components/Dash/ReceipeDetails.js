@@ -250,7 +250,6 @@ const RecipeDetail = ({ edit }) => {
     </>
   );
 
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
@@ -258,14 +257,11 @@ const RecipeDetail = ({ edit }) => {
     const Reader = new FileReader();
     Reader.readAsDataURL(file);
 
-
     Reader.onload = () => {
-      if (Reader.readyState === 2)
-      setImagePreview(Reader.result);
-        //2 means image is process and 0 means image is not processed
-        setUpdatedPostData(Reader.result);
+      if (Reader.readyState === 2) setImagePreview(Reader.result);
+      //2 means image is process and 0 means image is not processed
+      setUpdatedPostData(Reader.result);
     };
-
   };
 
   const handleUpdate = () => {
@@ -309,11 +305,9 @@ const RecipeDetail = ({ edit }) => {
         <div className="w-full h-96 left-[4.32px] top-[6.71px] absolute  rounded-2xl" />
       </div>
       {id !== "0" && (
-     <div className="left-[29.13px] top-[16.19px] absolute text-gray-200 lg:text-5xl md:text-4xl xl:text-5xl text-2xl   font-serif p-4 ">
-     Receipe By: {currentUser?.createdBy?.firstName}
-   </div>
-   
-     
+        <div className="left-[29.13px] top-[16.19px] absolute text-gray-200 lg:text-5xl md:text-4xl xl:text-5xl text-2xl   font-serif p-4 ">
+          Receipe By: {currentUser?.createdBy?.firstName}
+        </div>
       )}
 
       <div className="w-full absolute top-16 ">
@@ -376,37 +370,43 @@ const RecipeDetail = ({ edit }) => {
 
                   {editMode ? (
                     <>
-                    {((imagePreview===null))&&(<>  <label
-                        htmlFor="recipePhoto"
-                        className="cursor-pointer lg:hidden text-red-600 hover:text-red-900"
-                      >
-                        Put your food here (click)
-                      </label>
-                      <input
-                        type="file"
-                        id="recipePhoto"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleImageUpload}
-                      />
-                      </>)}
-                       {imagePreview && (
-                    <img
-                      style={{
-                        height: "230px",
-                        width: "230px",
-                        borderRadius: "10px",
-                      }}
-                      className="lg:hidden"
-                      src={imagePreview}
-                      alt="Uploaded Food"
-                    />
-                  )}
+                      {imagePreview === null && (
+                        <>
+                          {" "}
+                          <label
+                            htmlFor="recipePhoto"
+                            className="cursor-pointer lg:hidden text-red-600 hover:text-red-900"
+                          >
+                            Put your food here (click)
+                          </label>
+                          <input
+                            type="file"
+                            id="recipePhoto"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageUpload}
+                          />
+                        </>
+                      )}
+                      {imagePreview && (
+                        <img
+                          style={{
+                            height: "230px",
+                            width: "230px",
+                            borderRadius: "10px",
+                          }}
+                          className="lg:hidden"
+                          src={imagePreview}
+                          alt="Uploaded Food"
+                        />
+                      )}
                     </>
                   ) : (
                     <img
-                      className="mt-4 mb-4 lg:hidden h-60 shadow-2xl xs:width-full width-full sm:width-full bg-white  object-cover rounded-3xl"
-                      src={imageprev||imagePreview}
+                      // style={{ width: "100%", objectFit: "contain" }}
+                      className="mt-4 mb-4 lg:hidden h-60 shadow-2xl  w-full md:w-1/2  sm:w-1/2 bg-white object-contain rounded-3xl"
+
+                      src={imageprev || imagePreview}
                       alt="..."
                     />
                   )}
@@ -625,7 +625,7 @@ const RecipeDetail = ({ edit }) => {
             <div className="absolute inset-0 flex items-center w-full h-full justify-center">
               {editMode ? (
                 <>
-                  {(imagePreview===null) && (
+                  {imagePreview === null && (
                     <>
                       {" "}
                       <span
@@ -665,7 +665,7 @@ const RecipeDetail = ({ edit }) => {
                     width: "230px",
                     borderRadius: " 130px",
                   }}
-                  src={imageprev||imagePreview}
+                  src={imageprev || imagePreview}
                   alt="ssss"
                 />
               )}
