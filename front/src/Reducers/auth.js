@@ -132,7 +132,7 @@ const authSlice = createSlice({
         state.loading = false;
       
         if (action.payload.error) {
-          // console.log(action.payload);
+
           state.errorsignin = action.payload.error;
           state.successsignin = action.payload.success;
         } else {

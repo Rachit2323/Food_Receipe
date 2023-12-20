@@ -6,7 +6,7 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getrecipedata, recipedata } from "../../Reducers/Reciepe";
-import { userDetail,logout } from "../../Reducers/auth.js";
+import { userDetail, logout } from "../../Reducers/auth.js";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,37 +22,41 @@ const Header = () => {
   const [reciepeData, setReciepeData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredRecipes = reciepeData.filter((recipe) => {
-    const lowerCaseQuery = searchQuery.toLowerCase();
+  const filteredRecipes = Array.isArray(reciepeData)
+  ? reciepeData.filter((recipe) => {
+      const lowerCaseQuery = searchQuery.toLowerCase();
 
-    const recipeNameMatch = recipe.recipeName
-      .toLowerCase()
-      .includes(lowerCaseQuery);
-    const createdByMatch = recipe.createdBy.firstName
-      .toLowerCase()
-      .includes(lowerCaseQuery);
-    const ingredientMatch = recipe.ingredients.some(
-      (ingredient) =>
-        ingredient.name.toLowerCase().includes(lowerCaseQuery) ||
-        ingredient.description.toLowerCase().includes(lowerCaseQuery)
-    );
-    const stepMatch = recipe.steps.some((step) =>
-      step.toLowerCase().includes(lowerCaseQuery)
-    );
-    const overviewMatch = recipe.overview.some(
-      (overviewItem) =>
-        overviewItem.name.toLowerCase().includes(lowerCaseQuery) ||
-        overviewItem.description.toLowerCase().includes(lowerCaseQuery)
-    );
+      const recipeNameMatch = recipe.recipeName
+        .toLowerCase()
+        .includes(lowerCaseQuery);
+      const createdByMatch = recipe.createdBy.firstName
+        .toLowerCase()
+        .includes(lowerCaseQuery);
+      const ingredientMatch = recipe.ingredients.some(
+        (ingredient) =>
+          ingredient.name.toLowerCase().includes(lowerCaseQuery) ||
+          ingredient.description.toLowerCase().includes(lowerCaseQuery)
+      );
+      const stepMatch = recipe.steps.some((step) =>
+        step.toLowerCase().includes(lowerCaseQuery)
+      );
+      const overviewMatch = recipe.overview.some(
+        (overviewItem) =>
+          overviewItem.name.toLowerCase().includes(lowerCaseQuery) ||
+          overviewItem.description.toLowerCase().includes(lowerCaseQuery)
+      );
 
-    return (
-      recipeNameMatch ||
-      createdByMatch ||
-      ingredientMatch ||
-      stepMatch ||
-      overviewMatch
-    );
-  });
+      return (
+        recipeNameMatch ||
+        createdByMatch ||
+        ingredientMatch ||
+        stepMatch ||
+        overviewMatch
+      );
+    })
+  : [];
+
+
 
   const handleAddStep = () => {
     setStepInputs([...stepInputs, ""]);
@@ -64,11 +68,8 @@ const Header = () => {
     (state) => state.reciepe
   );
 
-
-
   useEffect(() => {
-    if (successallreceipe) {
-      
+    if (successallreceipe && allreceipe) {
       setReciepeData(allreceipe);
     }
   }, [allreceipe, successallreceipe, createreceipe]);
@@ -76,7 +77,11 @@ const Header = () => {
   useEffect(() => {
     dispatch(getrecipedata());
     dispatch(userDetail());
+    
+    setReciepeData(allreceipe);
   }, []);
+
+
 
   const handleRemoveStep = (index) => {
     const newSteps = [...stepInputs];
@@ -144,9 +149,8 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-     dispatch(logout());
+    dispatch(logout());
     navigate("/");
-
   };
 
   return (
@@ -171,7 +175,7 @@ const Header = () => {
 
           <button
             className="border border-red-500 px-4 py-2 cursor-pointer bg-white text-red-500 hover:bg-red-500 hover:text-white ml-2"
-            onClick={()=>handleLogout()}
+            onClick={() => handleLogout()}
           >
             Logout
           </button>
@@ -193,41 +197,50 @@ const Header = () => {
         </h4>
         <hr className="w-screen border-t border-gray-500 mt-2 lg:mt-0" />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full p-6">
-          {searchQuery
-            ? // If searchQuery is not empty, use filtered recipes
-              filteredRecipes.map((recipe) => (
-                <div key={recipe._id} onClick={() => openFood(recipe._id)}>
-                  <FoodCard
-                    id={recipe._id}
-                    dull={addFoodInput}
-                    userId={recipe.createdBy._id}
-                    createdBy={recipe.createdBy.firstName}
-                    ingredients={recipe.ingredients}
-                    recipeDescription={recipe.recipeDescription}
-                    recipeName={recipe.recipeName}
-                    recipePhoto={recipe.recipePhoto}
-                    steps={recipe.steps}
-                  />
-                </div>
-              ))
-            : // If searchQuery is empty, use all recipes
-              reciepeData.map((recipe) => (
-                <div key={recipe._id} onClick={() => openFood(recipe._id)}>
-                  <FoodCard
-                    // userId={}
-                    id={recipe._id}
-                    dull={addFoodInput}
-                    userId={recipe.createdBy._id}
-                    createdBy={recipe.createdBy.firstName}
-                    ingredients={recipe.ingredients}
-                    recipeDescription={recipe.recipeDescription}
-                    recipeName={recipe.recipeName}
-                    recipePhoto={recipe.recipePhoto}
-                    steps={recipe.steps}
-                  />
-                </div>
-              ))}
+  {searchQuery
+    ? // If searchQuery is not empty, use filtered recipes
+      filteredRecipes.length > 0 ? (
+        filteredRecipes.map((recipe) => (
+          <div key={recipe._id} onClick={() => openFood(recipe._id)}>
+            <FoodCard
+              id={recipe._id}
+              dull={addFoodInput}
+              userId={recipe.createdBy._id}
+              createdBy={recipe.createdBy.firstName}
+              ingredients={recipe.ingredients}
+              recipeDescription={recipe.recipeDescription}
+              recipeName={recipe.recipeName}
+              recipePhoto={recipe.recipePhoto}
+              steps={recipe.steps}
+            />
+          </div>
+        ))
+      ) : (
+        <p className="text-white text-4xl">No matching recipes found</p>
+      )
+    : // If searchQuery is empty, use all recipes
+    reciepeData && Array.isArray(reciepeData) && reciepeData.length > 0 ? (
+      reciepeData.map((recipe) => (
+        <div key={recipe._id} onClick={() => openFood(recipe._id)}>
+          <FoodCard
+            // userId={}
+            id={recipe._id}
+            dull={addFoodInput}
+            userId={recipe.createdBy._id}
+            createdBy={recipe.createdBy.firstName}
+            ingredients={recipe.ingredients}
+            recipeDescription={recipe.recipeDescription}
+            recipeName={recipe.recipeName}
+            recipePhoto={recipe.recipePhoto}
+            steps={recipe.steps}
+          />
         </div>
+      ))
+    ) : (
+      <p className="text-white text-4xl">No recipes available</p>
+    )}
+</div>
+
       </div>
 
       {/* {addFoodInput && (

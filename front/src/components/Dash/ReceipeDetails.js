@@ -20,7 +20,6 @@ const RecipeDetail = ({ edit }) => {
   const [allreceipedata, setAllReceipeData] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [updatedPostData, setUpdatedPostData] = useState(null);
-  
 
   const [data, setData] = useState({
     recipeName: "",
@@ -46,6 +45,7 @@ const RecipeDetail = ({ edit }) => {
   const navigate = useNavigate();
 
   const [imageprev, setImagePrev] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     if (id !== "0" && id !== undefined) {
@@ -99,23 +99,22 @@ const RecipeDetail = ({ edit }) => {
   };
 
   useEffect(() => {
-    if (successallreceipe&&(id!=="0")) setAllReceipeData(allreceipe);
+    if (successallreceipe && id !== "0") setAllReceipeData(allreceipe);
   }, [successallreceipe, userdetailsucs, userdet]);
 
   useEffect(() => {
-    if (Array.isArray(allreceipedata)&&(id!=="0")) {
+    if (Array.isArray(allreceipedata) && id !== "0") {
       const matchingRecipe = allreceipedata.find((recipe) => recipe._id === id);
       setCurrentUser(matchingRecipe);
     }
   }, [allreceipedata, id]);
 
   useEffect(() => {
-    if (findReceipeSuccess&&(id!=="0")) {
+    if (findReceipeSuccess && id !== "0") {
       setData(findReceipedata);
       setImagePrev(findReceipedata?.recipePhoto?.secure_url);
       setEditMode(false);
     }
-  
   }, [findReceipedata, findReceipeSuccess]);
 
   useEffect(() => {
@@ -125,7 +124,7 @@ const RecipeDetail = ({ edit }) => {
   }, []);
 
   useEffect(() => {
-    if (createreceipe&&(id!=="0")) {
+    if (createreceipe && id !== "0") {
       setData(currentreceipe);
       setImagePrev(currentreceipe?.recipePhoto?.secure_url);
       setEditMode(false);
@@ -229,7 +228,6 @@ const RecipeDetail = ({ edit }) => {
   };
 
   const handleDeleteStep = (index) => {
-
     const newData = { ...data };
     newData.steps.splice(index, 1);
     setData(newData);
@@ -255,14 +253,19 @@ const RecipeDetail = ({ edit }) => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
+    setImagePreview(file);
     const Reader = new FileReader();
     Reader.readAsDataURL(file);
 
+
     Reader.onload = () => {
       if (Reader.readyState === 2)
+      setImagePreview(Reader.result);
         //2 means image is process and 0 means image is not processed
         setUpdatedPostData(Reader.result);
     };
+
+
   };
 
   const handleUpdate = () => {
@@ -291,7 +294,8 @@ const RecipeDetail = ({ edit }) => {
       })
     );
 
-    navigate("/dash");
+    // navigate("/dash");
+    setEditMode(false);
   };
 
   if (loading) {
@@ -318,12 +322,14 @@ const RecipeDetail = ({ edit }) => {
                 <div className="w-full">
                   {userdet._id === currentUser?.createdBy?._id && (
                     <div className="w-full flex gap-2 justify-end">
-                     {(id!=="0")&&( <button
-                        className="w-16 bg-red-400 hover:bg-red-600 rounded-md p-2 flex items-center justify-center"
-                        onClick={() => handleDelete()}
-                      >
-                        <AiOutlineDelete className="text-white" />
-                      </button>)}
+                      {id !== "0" && (
+                        <button
+                          className="w-16 bg-red-400 hover:bg-red-600 rounded-md p-2 flex items-center justify-center"
+                          onClick={() => handleDelete()}
+                        >
+                          <AiOutlineDelete className="text-white" />
+                        </button>
+                      )}
 
                       {!editMode && (
                         <button
@@ -368,7 +374,7 @@ const RecipeDetail = ({ edit }) => {
 
                   {editMode ? (
                     <>
-                      <label
+                    {((imagePreview===null))&&(<>  <label
                         htmlFor="recipePhoto"
                         className="cursor-pointer lg:hidden text-red-600 hover:text-red-900"
                       >
@@ -381,11 +387,24 @@ const RecipeDetail = ({ edit }) => {
                         className="hidden"
                         onChange={handleImageUpload}
                       />
+                      </>)}
+                       {imagePreview && (
+                    <img
+                      style={{
+                        height: "230px",
+                        width: "230px",
+                        borderRadius: "10px",
+                      }}
+                      className="lg:hidden"
+                      src={imagePreview}
+                      alt="Uploaded Food"
+                    />
+                  )}
                     </>
                   ) : (
                     <img
                       className="mt-4 mb-4 lg:hidden h-60 shadow-2xl w-1/2 object-cover rounded-3xl"
-                      src={imageprev}
+                      src={imageprev||imagePreview}
                       alt="..."
                     />
                   )}
@@ -582,28 +601,12 @@ const RecipeDetail = ({ edit }) => {
                       </button>
                     ) : (
                       <button
-                        onClick={()=>handleSubmit()}
+                        onClick={() => handleSubmit()}
                         className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
                       >
                         Submit
                       </button>
                     ))}
-
-                  {/* {editMode && id !== "0" ? (
-                    <button
-                      onClick={() => handleUpdate()}
-                      className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-                    >
-                      Update
-                    </button>
-                  ) : (
-                    <button
-                      onClick={handleSubmit}
-                      className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-                    >
-                      Submit
-                    </button>
-                  )} */}
                 </div>
               </div>
             </div>
@@ -620,21 +623,37 @@ const RecipeDetail = ({ edit }) => {
             <div className="absolute inset-0 flex items-center w-full h-full justify-center">
               {editMode ? (
                 <>
-                  <span
-                    className="cursor-pointer text-gray-600 hover:text-red-500"
-                    onClick={() =>
-                      document.getElementById("recipePhoto").click()
-                    }
-                  >
-                    Put your food here (click)
-                  </span>
-                  <input
-                    type="file"
-                    id="recipePhoto"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                  />
+                  {(imagePreview===null) && (
+                    <>
+                      {" "}
+                      <span
+                        className="cursor-pointer text-gray-600 hover:text-red-500"
+                        onClick={() =>
+                          document.getElementById("recipePhoto").click()
+                        }
+                      >
+                        Put your food here (click)
+                      </span>
+                      <input
+                        type="file"
+                        id="recipePhoto"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageUpload}
+                      />
+                    </>
+                  )}
+                  {imagePreview && (
+                    <img
+                      style={{
+                        height: "230px",
+                        width: "230px",
+                        borderRadius: "130px",
+                      }}
+                      src={imagePreview}
+                      alt="Uploaded Food"
+                    />
+                  )}
                 </>
               ) : (
                 <img
@@ -644,8 +663,8 @@ const RecipeDetail = ({ edit }) => {
                     width: "230px",
                     borderRadius: " 130px",
                   }}
-                  src={imageprev}
-                  alt="..."
+                  src={imageprev||imagePreview}
+                  alt="ssss"
                 />
               )}
             </div>

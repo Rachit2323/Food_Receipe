@@ -186,6 +186,7 @@ const reciepeSlice = createSlice({
         } else {
           // state.errorsignup = action.payload.message;
           state.successallreceipe = action.payload.success;
+
           state.allreceipe = action.payload.data;
         }
       })
