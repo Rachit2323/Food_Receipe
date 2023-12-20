@@ -290,6 +290,8 @@ const RecipeDetail = ({ edit }) => {
         overviewInputs: data.overview,
       })
     );
+
+    navigate("/dash");
   };
 
   if (loading) {
@@ -580,7 +582,7 @@ const RecipeDetail = ({ edit }) => {
                       </button>
                     ) : (
                       <button
-                        onClick={handleSubmit}
+                        onClick={()=>handleSubmit()}
                         className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
                       >
                         Submit
