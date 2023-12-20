@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
 
-const API = "http://localhost:4000/";
+// const API = "http://localhost:4000/";
+const API ="https://food-receipe-henna.vercel.app/";
 
 let initialState = {
   loading: false,

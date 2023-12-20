@@ -57,7 +57,7 @@ const Signup = () => {
 
   const handleSubmitSignin = (e) => {
     e.preventDefault();
-    console.log('sign')
+
     dispatch(signinUser(signinData));
   };
   return (

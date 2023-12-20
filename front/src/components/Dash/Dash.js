@@ -6,7 +6,7 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getrecipedata, recipedata } from "../../Reducers/Reciepe";
-import { userDetail } from "../../Reducers/auth.js";
+import { userDetail,logout } from "../../Reducers/auth.js";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -64,8 +64,11 @@ const Header = () => {
     (state) => state.reciepe
   );
 
+
+
   useEffect(() => {
     if (successallreceipe) {
+      
       setReciepeData(allreceipe);
     }
   }, [allreceipe, successallreceipe, createreceipe]);
@@ -135,13 +138,15 @@ const Header = () => {
   //   );
   // };
 
-  // if (loading) {
-  //   return <div className="text-white text-3xl">Loading...</div>;
-  // }
+  if (loading) {
+    return <div className="text-white text-3xl">Loading...</div>;
+  }
 
   const handleLogout = () => {
-    // navigate("/");
-    // localStorage.clear();
+    localStorage.clear();
+     dispatch(logout());
+    navigate("/");
+
   };
 
   return (
@@ -195,6 +200,7 @@ const Header = () => {
                   <FoodCard
                     id={recipe._id}
                     dull={addFoodInput}
+                    userId={recipe.createdBy._id}
                     createdBy={recipe.createdBy.firstName}
                     ingredients={recipe.ingredients}
                     recipeDescription={recipe.recipeDescription}
@@ -208,8 +214,10 @@ const Header = () => {
               reciepeData.map((recipe) => (
                 <div key={recipe._id} onClick={() => openFood(recipe._id)}>
                   <FoodCard
+                    // userId={}
                     id={recipe._id}
                     dull={addFoodInput}
+                    userId={recipe.createdBy._id}
                     createdBy={recipe.createdBy.firstName}
                     ingredients={recipe.ingredients}
                     recipeDescription={recipe.recipeDescription}

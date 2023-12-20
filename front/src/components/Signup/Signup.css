@@ -333,3 +333,94 @@ h3 {
     height: 65%;
   }
 }
+
+.outer_signup {
+  /* ... existing styles ... */
+
+  @media (max-width: 768px) {
+    .signup_inside {
+      width: 80%;
+      height: 70%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .signup_inside {
+      width: 90%;
+      height: 80%;
+    }
+  }
+}
+
+.input_section {
+
+
+  @media (max-width: 768px) {
+    .input_section {
+      width: 90%;
+    }
+  }
+}
+
+.all_input {
+
+  @media (max-width: 768px) {
+    .all_input input {
+      width: 80%;
+    }
+
+    .all_input > button {
+      width: 80%;
+    }
+  }
+}
+
+.buttons_signup {
+
+  @media (max-width: 768px) {
+    .buttons_signup > button {
+      width: 45%;
+    }
+  }
+}
+
+.signup_inside1 {
+
+
+  @media (max-width: 1036px) {
+    .signup_inside1 {
+      height: 75%;
+    }
+  }
+}
+
+.all_button_select {
+
+  @media (max-width: 1036px) {
+    .all_button_select {
+      flex-direction: column;
+      width: 80%;
+    }
+
+    .all_button_select > button {
+      width: 100%;
+    }
+  }
+}
+
+.input_button_types {
+
+  @media (max-width: 1036px) {
+    .input_button_types {
+      width: 80%;
+    }
+
+    .input_button_types > input {
+      width: 100%;
+    }
+
+    .input_button_types > button {
+      width: 100%;
+    }
+  }
+}

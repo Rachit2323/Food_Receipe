@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaHeart } from "react-icons/fa";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userDetail } from "../../Reducers/auth.js";
 const FoodCard = ({
   id,
   dull,
+  userId,
   recipeName,
   recipeDescription,
   createdBy,
@@ -13,9 +16,13 @@ const FoodCard = ({
   steps,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(userDetail());
+  }, []);
+  const { userdet } = useSelector((state) => state.user);
 
   const handleButtonClick = (id) => {
-
     navigate(`/edit/${id}`);
   };
 
@@ -23,7 +30,6 @@ const FoodCard = ({
     navigate(`/add/${id}`);
   };
 
-  
   return (
     <div
       className={`bg-white w-full h-full  p-4 rounded-md shadow-md transition-transform transform-gpu hover:scale-105 cursor-pointer ${
@@ -35,14 +41,16 @@ const FoodCard = ({
           <h3 className="text-xl font-semibold  flex text-gray-700 m-0">
             Name: {recipeName}
           </h3>
-          <button
-            className="bg-green-500 text-white border border-green-600 px-2 flex justify-center items-center rounded-md hover:bg-green-600 cursor-pointer"
-            onClick={() => handleButtonClick(id)}
-          >
-            <AiOutlineEdit />
-          </button>
-        </div>
 
+          {userdet?._id === userId && (
+            <button
+              className="bg-green-500 text-white border border-green-600 px-2 flex justify-center items-center rounded-md hover:bg-green-600 cursor-pointer"
+              onClick={() => handleButtonClick(id)}
+            >
+              <AiOutlineEdit />
+            </button>
+          )}
+        </div>
         <div onClick={() => openFood(id)}>
           <img
             src={recipePhoto.secure_url}
