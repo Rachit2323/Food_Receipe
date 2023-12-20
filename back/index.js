@@ -25,7 +25,7 @@ app.use(express.json({ limit: '50mb' }));
 
 
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["http://localhost:3000","https://food-receipe-g6mi.vercel.app"];
 app.use(
   cors({
     credentials: true,
