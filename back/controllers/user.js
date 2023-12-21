@@ -9,8 +9,7 @@ exports.signup = async (req, res) => {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const emailLowerCase = email.toLowerCase(); 
-
+    
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
@@ -23,8 +22,7 @@ exports.signup = async (req, res) => {
         .json({ success: false, error: "Invalid email format" });
     }
 
-
-    const existingUser = await User.findOne({ email: emailLowerCase });
+    const existingUser = await User.findOne({ email: { $regex: new RegExp(email, 'i') } });
 
     if (existingUser) {
       return res
@@ -62,7 +60,9 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    // console.log(email);
+
+    const user =await User.findOne({ email: { $regex: new RegExp(email, 'i') } });
 
     if (!user) {
       return res.status(400).json({
