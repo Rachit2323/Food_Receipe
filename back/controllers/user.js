@@ -9,6 +9,8 @@ exports.signup = async (req, res) => {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailLowerCase = email.toLowerCase(); 
+
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
@@ -21,7 +23,8 @@ exports.signup = async (req, res) => {
         .json({ success: false, error: "Invalid email format" });
     }
 
-    const existingUser = await User.findOne({ email });
+
+    const existingUser = await User.findOne({ email: emailLowerCase });
 
     if (existingUser) {
       return res
