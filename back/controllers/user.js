@@ -9,6 +9,14 @@ exports.signup = async (req, res) => {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!password) {
+      return res.status(400).json({
+        success: false,
+        error: "Password cannot be empty",
+      });
+    }
+
     
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -27,7 +35,7 @@ exports.signup = async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .json({ success: false, error: "Username or email already exists" });
+        .json({ success: false, error: "Email already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -67,7 +75,7 @@ exports.signin = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "Email does not exist",
+        error: "Email does not exist",
       });
     }
 
@@ -76,7 +84,7 @@ exports.signin = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({
         success: false,
-        message: "Invalid password",
+        error: "Invalid password",
       });
     }
 

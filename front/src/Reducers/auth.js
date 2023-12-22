@@ -114,7 +114,8 @@ const authSlice = createSlice({
           state.errorsignup = action.payload.error;
           state.successsignup = action.payload.success;
         } else {
-          state.errorsignup = action.payload.message;
+          // state.errorsignup = action.payload.error;
+          state.errorsignup="";
           state.successsignup = action.payload.success;
           state.signupdata = action.payload.data;
           state.logoutstate=false;
@@ -130,14 +131,15 @@ const authSlice = createSlice({
       })
       .addCase(signinUser.fulfilled, (state, action) => {
         state.loading = false;
-      
+       
         if (action.payload.error) {
 
           state.errorsignin = action.payload.error;
           state.successsignin = action.payload.success;
         } else {
          
-          state.errorsignin = action.payload.message;
+          // state.errorsignin = action.payload.message;
+          state.errorsignin="";
           state.successsignin = action.payload.success;
           state.logoutstate=false;
         }

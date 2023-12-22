@@ -40,7 +40,7 @@ const Signup = () => {
     setPasswordVisible2(!passwordVisible2);
   };
 
-  const { successsignup, successsignin, errorsignin ,logoutstate } = useSelector(
+  const { successsignup, successsignin, errorsignin ,logoutstate ,errorsignup} = useSelector(
     (state) => state.user
   );
 
@@ -48,11 +48,16 @@ const Signup = () => {
   useEffect(() => {
     if (successsignin || successsignup) {
       navigate("/dash");
-    } else if ( !successsignin && errorsignin &&!logoutstate) {
+    } else if ( !successsignin && errorsignin ) {
+    
       toast.error(errorsignin);
     }
+    else if(!successsignup&&errorsignup)
+    {  
+      toast.error(errorsignup);
+    }
 
-  }, [successsignin, successsignup, errorsignin,logoutstate ]);
+  }, [successsignin, successsignup, errorsignin,logoutstate,errorsignup ]);
   
   const handleLogin = () => {
     setSigninDetail(!signindetail);
